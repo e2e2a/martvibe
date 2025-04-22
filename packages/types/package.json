@@ -1,0 +1,11 @@
+{
+  "name": "@repo/types",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "main": "./index.d.ts",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "echo 'No build necessary for type definitions'"
+  }
+}
