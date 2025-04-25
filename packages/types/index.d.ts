@@ -1,8 +1,10 @@
+
+
 export interface User {
   id: number;
   email: string;
   username?: string;
-  role?: 'admin' | 'seller' | 'buyer'; // Assuming Role is one of these values, adjust as needed.
+  role?: 'ADMIN' | 'SELLER' | 'BUYER' | 'OWNER';
   profile?: Profile;
   verified: boolean;
   verified_date?: Date | null;

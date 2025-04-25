@@ -117,6 +117,26 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  providerAccountId: 'providerAccountId',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  expires: 'expires',
+  sessionToken: 'sessionToken',
+  accessToken: 'accessToken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -124,6 +144,8 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   verified: 'verified',
   verified_date: 'verified_date',
+  revoke: 'revoke',
+  password: 'password',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -145,10 +167,42 @@ exports.Prisma.ProfileScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VerificationRequestScalarFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.StoreScalarFieldEnum = {
   id: 'id',
   name: 'name',
   profileId: 'profileId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  profileId: 'profileId',
+  price: 'price',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  weightUnit: 'weightUnit',
+  weightValue: 'weightValue',
+  quantity: 'quantity',
+  unit: 'unit',
+  unitValue: 'unitValue',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -175,9 +229,14 @@ exports.Role = exports.$Enums.Role = {
 };
 
 exports.Prisma.ModelName = {
+  Account: 'Account',
+  Session: 'Session',
   User: 'User',
   Profile: 'Profile',
-  Store: 'Store'
+  VerificationRequest: 'VerificationRequest',
+  Store: 'Store',
+  Product: 'Product',
+  Category: 'Category'
 };
 
 /**
