@@ -63,7 +63,7 @@ const Page = () => {
   return (
     <div className="bg-neutral-100 ">
       <div className="sm:grid flex sm:grid-cols-2 pt-[20%] sm:pt-[10%] items-center sm:items-start flex-col h-screen">
-        <div className=" flex-col md:pl-[15%] pr-0 sm:pr-[5%] w-full">
+        <div className=" flex-col md:pl-[15%] pr-0 sm:pr-[5%] w-full mb-5 sm:mb-0">
           <h1 className="font-bold sm:text-5xl text-2xl w-full text-center sm:text-start">
             <span className="text-primary italic sm:text-8xl text-6xl">M</span>
             art
