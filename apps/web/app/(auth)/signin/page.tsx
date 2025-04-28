@@ -61,22 +61,21 @@ const Page = () => {
     }
   };
   return (
-    <div className=" bg-neutral-100 ">
-      <div className="pt-[10%] " />
-      <div className="grid grid-cols-2 xs:px-5 sm:px-10 md:px-[10%]  h-screen">
-        <div className="flex flex-col md:pl-15 pl-0 pr-48">
-          <h1 className="font-bold text-5xl">
-            <span className="text-primary italic text-8xl">M</span>
+    <div className="bg-neutral-100 ">
+      <div className="sm:grid flex sm:grid-cols-2 pt-[20%] sm:pt-[10%] items-center sm:items-start flex-col h-screen">
+        <div className=" flex-col md:pl-[15%] pr-0 sm:pr-[5%] w-full">
+          <h1 className="font-bold sm:text-5xl text-2xl w-full text-center sm:text-start">
+            <span className="text-primary italic sm:text-8xl text-6xl">M</span>
             art
-            <span className="text-primary text-6xl">V</span>
+            <span className="text-primary sm:text-6xl text-4xl">V</span>
             ibe
           </h1>
-          <span className="text-lg font-semibold font-poppins">
+          <div className="text-lg font-semibold font-poppins hidden justify-start w-full sm:flex">
             Your all-in-one tool for smart inventory tracking and effortless selling.
-          </span>
+          </div>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white  w-96 p-5 rounded-md ">
+          <div className="bg-white w-auto sm:w-96 p-5 rounded-md ">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} method="POST" className="space-y-6">
                 <div className="space-y-4">
