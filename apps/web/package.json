@@ -6,7 +6,7 @@
   "scripts": {
     "seed": "npx tsx prisma/category.seed.ts",
     "vercel-build": "",
-    "build": "prisma generate && next build",
+    "build": "npx prisma generate && next build",
     "postinstall": "prisma generate && prisma migrate deploy",
     "dev": "next dev --turbopack --port 3000",
     "start": "next start",
