@@ -18,9 +18,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import SidebarItem from './SidebarItem';
-import { ownerSidebar } from '@/constant/sidebar';
+import { SidebarItems } from '@/types';
 
-export function AppSidebar() {
+export function AppSidebar({ sidebarItems }: { sidebarItems: SidebarItems[] }) {
   return (
     <Sidebar>
       <SidebarContent className="text-lg bg-white">
@@ -35,7 +35,7 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent className="flex ">
             <SidebarMenu className="gap-y-1.5 pt-3 flex pb-10">
-              {ownerSidebar.map((item, index) => {
+              {sidebarItems.map((item, index) => {
                 return (
                   <SidebarMenuItem key={index}>
                     {/* <SidebarMenuButton asChild isActive={item.href === page.url} tooltip={{ children: item.title }}> */}

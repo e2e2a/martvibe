@@ -18,6 +18,9 @@ export default {
       },
     },
     extend: {
+      screens: {
+        xs: '480px',
+      },
       zIndex: {
         '60': '60', // Custom z-index value
         '75': '75', // Another custom z-index value
@@ -40,9 +43,6 @@ export default {
         'light-2': '#EFEFEF',
         'light-3': '#7878A3',
         'light-4': '#5C5C7B',
-      },
-      screens: {
-        xs: '480px',
       },
       width: {
         '420': '420px',

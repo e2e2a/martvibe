@@ -36,13 +36,18 @@ const checkProduct = async (data: ProductData, profileId: number) => {
   return tryCatch(async () => {
     const search = {
       profileId,
-      name: data.name,
       weightUnit: data.weightUnit,
       ...(data.weightValue ? { weightValue: data.weightValue } : {}),
     };
 
     const product = await prisma.product.findMany({
-      where: { ...search },
+      where: {
+        ...search,
+        name: {
+          equals: data.name,
+          mode: 'insensitive',
+        },
+      },
     });
 
     if (product && product.length > 0)

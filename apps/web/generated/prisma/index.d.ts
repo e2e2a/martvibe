@@ -49,6 +49,11 @@ export type Store = $Result.DefaultSelection<Prisma.$StorePayload>
  */
 export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
 /**
+ * Model Sale
+ * 
+ */
+export type Sale = $Result.DefaultSelection<Prisma.$SalePayload>
+/**
  * Model Category
  * 
  */
@@ -267,6 +272,16 @@ export class PrismaClient<
     * ```
     */
   get product(): Prisma.ProductDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sale`: Exposes CRUD operations for the **Sale** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sales
+    * const sales = await prisma.sale.findMany()
+    * ```
+    */
+  get sale(): Prisma.SaleDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.category`: Exposes CRUD operations for the **Category** model.
@@ -724,6 +739,7 @@ export namespace Prisma {
     VerificationRequest: 'VerificationRequest',
     Store: 'Store',
     Product: 'Product',
+    Sale: 'Sale',
     Category: 'Category'
   };
 
@@ -743,7 +759,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "user" | "profile" | "verificationRequest" | "store" | "product" | "category"
+      modelProps: "account" | "session" | "user" | "profile" | "verificationRequest" | "store" | "product" | "sale" | "category"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1265,6 +1281,80 @@ export namespace Prisma {
           }
         }
       }
+      Sale: {
+        payload: Prisma.$SalePayload<ExtArgs>
+        fields: Prisma.SaleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SaleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SaleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>
+          }
+          findFirst: {
+            args: Prisma.SaleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SaleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>
+          }
+          findMany: {
+            args: Prisma.SaleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>[]
+          }
+          create: {
+            args: Prisma.SaleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>
+          }
+          createMany: {
+            args: Prisma.SaleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SaleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>[]
+          }
+          delete: {
+            args: Prisma.SaleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>
+          }
+          update: {
+            args: Prisma.SaleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>
+          }
+          deleteMany: {
+            args: Prisma.SaleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SaleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SaleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>[]
+          }
+          upsert: {
+            args: Prisma.SaleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalePayload>
+          }
+          aggregate: {
+            args: Prisma.SaleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSale>
+          }
+          groupBy: {
+            args: Prisma.SaleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SaleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SaleCountArgs<ExtArgs>
+            result: $Utils.Optional<SaleCountAggregateOutputType> | number
+          }
+        }
+      }
       Category: {
         payload: Prisma.$CategoryPayload<ExtArgs>
         fields: Prisma.CategoryFieldRefs
@@ -1430,6 +1520,7 @@ export namespace Prisma {
     verificationRequest?: VerificationRequestOmit
     store?: StoreOmit
     product?: ProductOmit
+    sale?: SaleOmit
     category?: CategoryOmit
   }
 
@@ -1565,10 +1656,16 @@ export namespace Prisma {
    */
 
   export type ProfileCountOutputType = {
+    store_owner: number
+    store_seller: number
+    sale: number
     Product: number
   }
 
   export type ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store_owner?: boolean | ProfileCountOutputTypeCountStore_ownerArgs
+    store_seller?: boolean | ProfileCountOutputTypeCountStore_sellerArgs
+    sale?: boolean | ProfileCountOutputTypeCountSaleArgs
     Product?: boolean | ProfileCountOutputTypeCountProductArgs
   }
 
@@ -1586,8 +1683,60 @@ export namespace Prisma {
   /**
    * ProfileCountOutputType without action
    */
+  export type ProfileCountOutputTypeCountStore_ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreWhereInput
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountStore_sellerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreWhereInput
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountSaleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SaleWhereInput
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
   export type ProfileCountOutputTypeCountProductArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductWhereInput
+  }
+
+
+  /**
+   * Count Type StoreCountOutputType
+   */
+
+  export type StoreCountOutputType = {
+    seller: number
+  }
+
+  export type StoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seller?: boolean | StoreCountOutputTypeCountSellerArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * StoreCountOutputType without action
+   */
+  export type StoreCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCountOutputType
+     */
+    select?: StoreCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * StoreCountOutputType without action
+   */
+  export type StoreCountOutputTypeCountSellerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileWhereInput
   }
 
 
@@ -1597,10 +1746,12 @@ export namespace Prisma {
 
   export type ProductCountOutputType = {
     category: number
+    sales: number
   }
 
   export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | ProductCountOutputTypeCountCategoryArgs
+    sales?: boolean | ProductCountOutputTypeCountSalesArgs
   }
 
   // Custom InputTypes
@@ -1619,6 +1770,13 @@ export namespace Prisma {
    */
   export type ProductCountOutputTypeCountCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CategoryWhereInput
+  }
+
+  /**
+   * ProductCountOutputType without action
+   */
+  export type ProductCountOutputTypeCountSalesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SaleWhereInput
   }
 
 
@@ -5128,13 +5286,11 @@ export namespace Prisma {
   export type ProfileAvgAggregateOutputType = {
     id: number | null
     userId: number | null
-    storeId: number | null
   }
 
   export type ProfileSumAggregateOutputType = {
     id: number | null
     userId: number | null
-    storeId: number | null
   }
 
   export type ProfileMinAggregateOutputType = {
@@ -5145,7 +5301,6 @@ export namespace Prisma {
     middlename: string | null
     lastname: string | null
     suffix: string | null
-    storeId: number | null
     approved: boolean | null
     approved_date: Date | null
     verified: boolean | null
@@ -5162,7 +5317,6 @@ export namespace Prisma {
     middlename: string | null
     lastname: string | null
     suffix: string | null
-    storeId: number | null
     approved: boolean | null
     approved_date: Date | null
     verified: boolean | null
@@ -5179,7 +5333,6 @@ export namespace Prisma {
     middlename: number
     lastname: number
     suffix: number
-    storeId: number
     approved: number
     approved_date: number
     verified: number
@@ -5193,13 +5346,11 @@ export namespace Prisma {
   export type ProfileAvgAggregateInputType = {
     id?: true
     userId?: true
-    storeId?: true
   }
 
   export type ProfileSumAggregateInputType = {
     id?: true
     userId?: true
-    storeId?: true
   }
 
   export type ProfileMinAggregateInputType = {
@@ -5210,7 +5361,6 @@ export namespace Prisma {
     middlename?: true
     lastname?: true
     suffix?: true
-    storeId?: true
     approved?: true
     approved_date?: true
     verified?: true
@@ -5227,7 +5377,6 @@ export namespace Prisma {
     middlename?: true
     lastname?: true
     suffix?: true
-    storeId?: true
     approved?: true
     approved_date?: true
     verified?: true
@@ -5244,7 +5393,6 @@ export namespace Prisma {
     middlename?: true
     lastname?: true
     suffix?: true
-    storeId?: true
     approved?: true
     approved_date?: true
     verified?: true
@@ -5348,7 +5496,6 @@ export namespace Prisma {
     middlename: string | null
     lastname: string
     suffix: string | null
-    storeId: number
     approved: boolean | null
     approved_date: Date | null
     verified: boolean
@@ -5384,7 +5531,6 @@ export namespace Prisma {
     middlename?: boolean
     lastname?: boolean
     suffix?: boolean
-    storeId?: boolean
     approved?: boolean
     approved_date?: boolean
     verified?: boolean
@@ -5392,7 +5538,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    store?: boolean | StoreDefaultArgs<ExtArgs>
+    store_owner?: boolean | Profile$store_ownerArgs<ExtArgs>
+    store_seller?: boolean | Profile$store_sellerArgs<ExtArgs>
+    sale?: boolean | Profile$saleArgs<ExtArgs>
     Product?: boolean | Profile$ProductArgs<ExtArgs>
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
@@ -5405,7 +5553,6 @@ export namespace Prisma {
     middlename?: boolean
     lastname?: boolean
     suffix?: boolean
-    storeId?: boolean
     approved?: boolean
     approved_date?: boolean
     verified?: boolean
@@ -5413,7 +5560,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5424,7 +5570,6 @@ export namespace Prisma {
     middlename?: boolean
     lastname?: boolean
     suffix?: boolean
-    storeId?: boolean
     approved?: boolean
     approved_date?: boolean
     verified?: boolean
@@ -5432,7 +5577,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectScalar = {
@@ -5443,7 +5587,6 @@ export namespace Prisma {
     middlename?: boolean
     lastname?: boolean
     suffix?: boolean
-    storeId?: boolean
     approved?: boolean
     approved_date?: boolean
     verified?: boolean
@@ -5452,27 +5595,29 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "firstname" | "middlename" | "lastname" | "suffix" | "storeId" | "approved" | "approved_date" | "verified" | "verified_date" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "firstname" | "middlename" | "lastname" | "suffix" | "approved" | "approved_date" | "verified" | "verified_date" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    store?: boolean | StoreDefaultArgs<ExtArgs>
+    store_owner?: boolean | Profile$store_ownerArgs<ExtArgs>
+    store_seller?: boolean | Profile$store_sellerArgs<ExtArgs>
+    sale?: boolean | Profile$saleArgs<ExtArgs>
     Product?: boolean | Profile$ProductArgs<ExtArgs>
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    store?: boolean | StoreDefaultArgs<ExtArgs>
   }
   export type ProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    store?: boolean | StoreDefaultArgs<ExtArgs>
   }
 
   export type $ProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Profile"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      store: Prisma.$StorePayload<ExtArgs>
+      store_owner: Prisma.$StorePayload<ExtArgs>[]
+      store_seller: Prisma.$StorePayload<ExtArgs>[]
+      sale: Prisma.$SalePayload<ExtArgs>[]
       Product: Prisma.$ProductPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5483,7 +5628,6 @@ export namespace Prisma {
       middlename: string | null
       lastname: string
       suffix: string | null
-      storeId: number
       approved: boolean | null
       approved_date: Date | null
       verified: boolean
@@ -5885,7 +6029,9 @@ export namespace Prisma {
   export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    store_owner<T extends Profile$store_ownerArgs<ExtArgs> = {}>(args?: Subset<T, Profile$store_ownerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    store_seller<T extends Profile$store_sellerArgs<ExtArgs> = {}>(args?: Subset<T, Profile$store_sellerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sale<T extends Profile$saleArgs<ExtArgs> = {}>(args?: Subset<T, Profile$saleArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Product<T extends Profile$ProductArgs<ExtArgs> = {}>(args?: Subset<T, Profile$ProductArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5923,7 +6069,6 @@ export namespace Prisma {
     readonly middlename: FieldRef<"Profile", 'String'>
     readonly lastname: FieldRef<"Profile", 'String'>
     readonly suffix: FieldRef<"Profile", 'String'>
-    readonly storeId: FieldRef<"Profile", 'Int'>
     readonly approved: FieldRef<"Profile", 'Boolean'>
     readonly approved_date: FieldRef<"Profile", 'DateTime'>
     readonly verified: FieldRef<"Profile", 'Boolean'>
@@ -6323,6 +6468,78 @@ export namespace Prisma {
      * Limit how many Profiles to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Profile.store_owner
+   */
+  export type Profile$store_ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Store
+     */
+    select?: StoreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Store
+     */
+    omit?: StoreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreInclude<ExtArgs> | null
+    where?: StoreWhereInput
+    orderBy?: StoreOrderByWithRelationInput | StoreOrderByWithRelationInput[]
+    cursor?: StoreWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreScalarFieldEnum | StoreScalarFieldEnum[]
+  }
+
+  /**
+   * Profile.store_seller
+   */
+  export type Profile$store_sellerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Store
+     */
+    select?: StoreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Store
+     */
+    omit?: StoreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreInclude<ExtArgs> | null
+    where?: StoreWhereInput
+    orderBy?: StoreOrderByWithRelationInput | StoreOrderByWithRelationInput[]
+    cursor?: StoreWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreScalarFieldEnum | StoreScalarFieldEnum[]
+  }
+
+  /**
+   * Profile.sale
+   */
+  export type Profile$saleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    where?: SaleWhereInput
+    orderBy?: SaleOrderByWithRelationInput | SaleOrderByWithRelationInput[]
+    cursor?: SaleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SaleScalarFieldEnum | SaleScalarFieldEnum[]
   }
 
   /**
@@ -7390,18 +7607,18 @@ export namespace Prisma {
 
   export type StoreAvgAggregateOutputType = {
     id: number | null
-    profileId: number | null
+    ownerId: number | null
   }
 
   export type StoreSumAggregateOutputType = {
     id: number | null
-    profileId: number | null
+    ownerId: number | null
   }
 
   export type StoreMinAggregateOutputType = {
     id: number | null
     name: string | null
-    profileId: number | null
+    ownerId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7409,7 +7626,7 @@ export namespace Prisma {
   export type StoreMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    profileId: number | null
+    ownerId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7417,7 +7634,7 @@ export namespace Prisma {
   export type StoreCountAggregateOutputType = {
     id: number
     name: number
-    profileId: number
+    ownerId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -7426,18 +7643,18 @@ export namespace Prisma {
 
   export type StoreAvgAggregateInputType = {
     id?: true
-    profileId?: true
+    ownerId?: true
   }
 
   export type StoreSumAggregateInputType = {
     id?: true
-    profileId?: true
+    ownerId?: true
   }
 
   export type StoreMinAggregateInputType = {
     id?: true
     name?: true
-    profileId?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7445,7 +7662,7 @@ export namespace Prisma {
   export type StoreMaxAggregateInputType = {
     id?: true
     name?: true
-    profileId?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7453,7 +7670,7 @@ export namespace Prisma {
   export type StoreCountAggregateInputType = {
     id?: true
     name?: true
-    profileId?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -7548,7 +7765,7 @@ export namespace Prisma {
   export type StoreGroupByOutputType = {
     id: number
     name: string
-    profileId: number | null
+    ownerId: number | null
     createdAt: Date
     updatedAt: Date
     _count: StoreCountAggregateOutputType | null
@@ -7575,52 +7792,63 @@ export namespace Prisma {
   export type StoreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    profileId?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    profile?: boolean | Store$profileArgs<ExtArgs>
+    owner?: boolean | Store$ownerArgs<ExtArgs>
+    seller?: boolean | Store$sellerArgs<ExtArgs>
+    _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
   export type StoreSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    profileId?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    owner?: boolean | Store$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
   export type StoreSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    profileId?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    owner?: boolean | Store$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
   export type StoreSelectScalar = {
     id?: boolean
     name?: boolean
-    profileId?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "profileId" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
+  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
   export type StoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    profile?: boolean | Store$profileArgs<ExtArgs>
+    owner?: boolean | Store$ownerArgs<ExtArgs>
+    seller?: boolean | Store$sellerArgs<ExtArgs>
+    _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type StoreIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Store$ownerArgs<ExtArgs>
+  }
+  export type StoreIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Store$ownerArgs<ExtArgs>
+  }
 
   export type $StorePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Store"
     objects: {
-      profile: Prisma.$ProfilePayload<ExtArgs> | null
+      owner: Prisma.$ProfilePayload<ExtArgs> | null
+      seller: Prisma.$ProfilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      profileId: number | null
+      ownerId: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["store"]>
@@ -8017,7 +8245,8 @@ export namespace Prisma {
    */
   export interface Prisma__StoreClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    profile<T extends Store$profileArgs<ExtArgs> = {}>(args?: Subset<T, Store$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    owner<T extends Store$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Store$ownerArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    seller<T extends Store$sellerArgs<ExtArgs> = {}>(args?: Subset<T, Store$sellerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8049,7 +8278,7 @@ export namespace Prisma {
   interface StoreFieldRefs {
     readonly id: FieldRef<"Store", 'Int'>
     readonly name: FieldRef<"Store", 'String'>
-    readonly profileId: FieldRef<"Store", 'Int'>
+    readonly ownerId: FieldRef<"Store", 'Int'>
     readonly createdAt: FieldRef<"Store", 'DateTime'>
     readonly updatedAt: FieldRef<"Store", 'DateTime'>
   }
@@ -8301,6 +8530,10 @@ export namespace Prisma {
      */
     data: StoreCreateManyInput | StoreCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8371,6 +8604,10 @@ export namespace Prisma {
      * Limit how many Stores to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8440,9 +8677,9 @@ export namespace Prisma {
   }
 
   /**
-   * Store.profile
+   * Store.owner
    */
-  export type Store$profileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Store$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Profile
      */
@@ -8456,6 +8693,30 @@ export namespace Prisma {
      */
     include?: ProfileInclude<ExtArgs> | null
     where?: ProfileWhereInput
+  }
+
+  /**
+   * Store.seller
+   */
+  export type Store$sellerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    where?: ProfileWhereInput
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    cursor?: ProfileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
   }
 
   /**
@@ -8757,6 +9018,7 @@ export namespace Prisma {
     updatedAt?: boolean
     profile?: boolean | ProfileDefaultArgs<ExtArgs>
     category?: boolean | Product$categoryArgs<ExtArgs>
+    sales?: boolean | Product$salesArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -8814,6 +9076,7 @@ export namespace Prisma {
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | ProfileDefaultArgs<ExtArgs>
     category?: boolean | Product$categoryArgs<ExtArgs>
+    sales?: boolean | Product$salesArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8828,6 +9091,7 @@ export namespace Prisma {
     objects: {
       profile: Prisma.$ProfilePayload<ExtArgs>
       category: Prisma.$CategoryPayload<ExtArgs>[]
+      sales: Prisma.$SalePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -9239,6 +9503,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfileDefaultArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     category<T extends Product$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Product$categoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sales<T extends Product$salesArgs<ExtArgs> = {}>(args?: Subset<T, Product$salesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9701,6 +9966,30 @@ export namespace Prisma {
   }
 
   /**
+   * Product.sales
+   */
+  export type Product$salesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    where?: SaleWhereInput
+    orderBy?: SaleOrderByWithRelationInput | SaleOrderByWithRelationInput[]
+    cursor?: SaleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SaleScalarFieldEnum | SaleScalarFieldEnum[]
+  }
+
+  /**
    * Product without action
    */
   export type ProductDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9716,6 +10005,1184 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProductInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Sale
+   */
+
+  export type AggregateSale = {
+    _count: SaleCountAggregateOutputType | null
+    _avg: SaleAvgAggregateOutputType | null
+    _sum: SaleSumAggregateOutputType | null
+    _min: SaleMinAggregateOutputType | null
+    _max: SaleMaxAggregateOutputType | null
+  }
+
+  export type SaleAvgAggregateOutputType = {
+    id: number | null
+    quantity: number | null
+    price: Decimal | null
+    total: Decimal | null
+    saledId: number | null
+    productId: number | null
+  }
+
+  export type SaleSumAggregateOutputType = {
+    id: number | null
+    quantity: number | null
+    price: Decimal | null
+    total: Decimal | null
+    saledId: number | null
+    productId: number | null
+  }
+
+  export type SaleMinAggregateOutputType = {
+    id: number | null
+    quantity: number | null
+    price: Decimal | null
+    total: Decimal | null
+    saledId: number | null
+    productId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SaleMaxAggregateOutputType = {
+    id: number | null
+    quantity: number | null
+    price: Decimal | null
+    total: Decimal | null
+    saledId: number | null
+    productId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SaleCountAggregateOutputType = {
+    id: number
+    quantity: number
+    price: number
+    total: number
+    saledId: number
+    productId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SaleAvgAggregateInputType = {
+    id?: true
+    quantity?: true
+    price?: true
+    total?: true
+    saledId?: true
+    productId?: true
+  }
+
+  export type SaleSumAggregateInputType = {
+    id?: true
+    quantity?: true
+    price?: true
+    total?: true
+    saledId?: true
+    productId?: true
+  }
+
+  export type SaleMinAggregateInputType = {
+    id?: true
+    quantity?: true
+    price?: true
+    total?: true
+    saledId?: true
+    productId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SaleMaxAggregateInputType = {
+    id?: true
+    quantity?: true
+    price?: true
+    total?: true
+    saledId?: true
+    productId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SaleCountAggregateInputType = {
+    id?: true
+    quantity?: true
+    price?: true
+    total?: true
+    saledId?: true
+    productId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SaleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sale to aggregate.
+     */
+    where?: SaleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sales to fetch.
+     */
+    orderBy?: SaleOrderByWithRelationInput | SaleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SaleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sales from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sales.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sales
+    **/
+    _count?: true | SaleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SaleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SaleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SaleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SaleMaxAggregateInputType
+  }
+
+  export type GetSaleAggregateType<T extends SaleAggregateArgs> = {
+        [P in keyof T & keyof AggregateSale]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSale[P]>
+      : GetScalarType<T[P], AggregateSale[P]>
+  }
+
+
+
+
+  export type SaleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SaleWhereInput
+    orderBy?: SaleOrderByWithAggregationInput | SaleOrderByWithAggregationInput[]
+    by: SaleScalarFieldEnum[] | SaleScalarFieldEnum
+    having?: SaleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SaleCountAggregateInputType | true
+    _avg?: SaleAvgAggregateInputType
+    _sum?: SaleSumAggregateInputType
+    _min?: SaleMinAggregateInputType
+    _max?: SaleMaxAggregateInputType
+  }
+
+  export type SaleGroupByOutputType = {
+    id: number
+    quantity: number
+    price: Decimal
+    total: Decimal
+    saledId: number | null
+    productId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: SaleCountAggregateOutputType | null
+    _avg: SaleAvgAggregateOutputType | null
+    _sum: SaleSumAggregateOutputType | null
+    _min: SaleMinAggregateOutputType | null
+    _max: SaleMaxAggregateOutputType | null
+  }
+
+  type GetSaleGroupByPayload<T extends SaleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SaleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SaleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SaleGroupByOutputType[P]>
+            : GetScalarType<T[P], SaleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SaleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    quantity?: boolean
+    price?: boolean
+    total?: boolean
+    saledId?: boolean
+    productId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    saledBy?: boolean | Sale$saledByArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sale"]>
+
+  export type SaleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    quantity?: boolean
+    price?: boolean
+    total?: boolean
+    saledId?: boolean
+    productId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    saledBy?: boolean | Sale$saledByArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sale"]>
+
+  export type SaleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    quantity?: boolean
+    price?: boolean
+    total?: boolean
+    saledId?: boolean
+    productId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    saledBy?: boolean | Sale$saledByArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sale"]>
+
+  export type SaleSelectScalar = {
+    id?: boolean
+    quantity?: boolean
+    price?: boolean
+    total?: boolean
+    saledId?: boolean
+    productId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SaleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "price" | "total" | "saledId" | "productId" | "createdAt" | "updatedAt", ExtArgs["result"]["sale"]>
+  export type SaleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    saledBy?: boolean | Sale$saledByArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+  export type SaleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    saledBy?: boolean | Sale$saledByArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+  export type SaleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    saledBy?: boolean | Sale$saledByArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+
+  export type $SalePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Sale"
+    objects: {
+      saledBy: Prisma.$ProfilePayload<ExtArgs> | null
+      product: Prisma.$ProductPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      quantity: number
+      price: Prisma.Decimal
+      total: Prisma.Decimal
+      saledId: number | null
+      productId: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["sale"]>
+    composites: {}
+  }
+
+  type SaleGetPayload<S extends boolean | null | undefined | SaleDefaultArgs> = $Result.GetResult<Prisma.$SalePayload, S>
+
+  type SaleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SaleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SaleCountAggregateInputType | true
+    }
+
+  export interface SaleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sale'], meta: { name: 'Sale' } }
+    /**
+     * Find zero or one Sale that matches the filter.
+     * @param {SaleFindUniqueArgs} args - Arguments to find a Sale
+     * @example
+     * // Get one Sale
+     * const sale = await prisma.sale.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SaleFindUniqueArgs>(args: SelectSubset<T, SaleFindUniqueArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Sale that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SaleFindUniqueOrThrowArgs} args - Arguments to find a Sale
+     * @example
+     * // Get one Sale
+     * const sale = await prisma.sale.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SaleFindUniqueOrThrowArgs>(args: SelectSubset<T, SaleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sale that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleFindFirstArgs} args - Arguments to find a Sale
+     * @example
+     * // Get one Sale
+     * const sale = await prisma.sale.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SaleFindFirstArgs>(args?: SelectSubset<T, SaleFindFirstArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sale that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleFindFirstOrThrowArgs} args - Arguments to find a Sale
+     * @example
+     * // Get one Sale
+     * const sale = await prisma.sale.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SaleFindFirstOrThrowArgs>(args?: SelectSubset<T, SaleFindFirstOrThrowArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sales that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sales
+     * const sales = await prisma.sale.findMany()
+     * 
+     * // Get first 10 Sales
+     * const sales = await prisma.sale.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const saleWithIdOnly = await prisma.sale.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SaleFindManyArgs>(args?: SelectSubset<T, SaleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Sale.
+     * @param {SaleCreateArgs} args - Arguments to create a Sale.
+     * @example
+     * // Create one Sale
+     * const Sale = await prisma.sale.create({
+     *   data: {
+     *     // ... data to create a Sale
+     *   }
+     * })
+     * 
+     */
+    create<T extends SaleCreateArgs>(args: SelectSubset<T, SaleCreateArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sales.
+     * @param {SaleCreateManyArgs} args - Arguments to create many Sales.
+     * @example
+     * // Create many Sales
+     * const sale = await prisma.sale.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SaleCreateManyArgs>(args?: SelectSubset<T, SaleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sales and returns the data saved in the database.
+     * @param {SaleCreateManyAndReturnArgs} args - Arguments to create many Sales.
+     * @example
+     * // Create many Sales
+     * const sale = await prisma.sale.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sales and only return the `id`
+     * const saleWithIdOnly = await prisma.sale.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SaleCreateManyAndReturnArgs>(args?: SelectSubset<T, SaleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Sale.
+     * @param {SaleDeleteArgs} args - Arguments to delete one Sale.
+     * @example
+     * // Delete one Sale
+     * const Sale = await prisma.sale.delete({
+     *   where: {
+     *     // ... filter to delete one Sale
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SaleDeleteArgs>(args: SelectSubset<T, SaleDeleteArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Sale.
+     * @param {SaleUpdateArgs} args - Arguments to update one Sale.
+     * @example
+     * // Update one Sale
+     * const sale = await prisma.sale.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SaleUpdateArgs>(args: SelectSubset<T, SaleUpdateArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sales.
+     * @param {SaleDeleteManyArgs} args - Arguments to filter Sales to delete.
+     * @example
+     * // Delete a few Sales
+     * const { count } = await prisma.sale.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SaleDeleteManyArgs>(args?: SelectSubset<T, SaleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sales.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sales
+     * const sale = await prisma.sale.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SaleUpdateManyArgs>(args: SelectSubset<T, SaleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sales and returns the data updated in the database.
+     * @param {SaleUpdateManyAndReturnArgs} args - Arguments to update many Sales.
+     * @example
+     * // Update many Sales
+     * const sale = await prisma.sale.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sales and only return the `id`
+     * const saleWithIdOnly = await prisma.sale.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SaleUpdateManyAndReturnArgs>(args: SelectSubset<T, SaleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Sale.
+     * @param {SaleUpsertArgs} args - Arguments to update or create a Sale.
+     * @example
+     * // Update or create a Sale
+     * const sale = await prisma.sale.upsert({
+     *   create: {
+     *     // ... data to create a Sale
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Sale we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SaleUpsertArgs>(args: SelectSubset<T, SaleUpsertArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sales.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleCountArgs} args - Arguments to filter Sales to count.
+     * @example
+     * // Count the number of Sales
+     * const count = await prisma.sale.count({
+     *   where: {
+     *     // ... the filter for the Sales we want to count
+     *   }
+     * })
+    **/
+    count<T extends SaleCountArgs>(
+      args?: Subset<T, SaleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SaleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Sale.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SaleAggregateArgs>(args: Subset<T, SaleAggregateArgs>): Prisma.PrismaPromise<GetSaleAggregateType<T>>
+
+    /**
+     * Group by Sale.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SaleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SaleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SaleGroupByArgs['orderBy'] }
+        : { orderBy?: SaleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SaleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSaleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Sale model
+   */
+  readonly fields: SaleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Sale.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SaleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    saledBy<T extends Sale$saledByArgs<ExtArgs> = {}>(args?: Subset<T, Sale$saledByArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Sale model
+   */
+  interface SaleFieldRefs {
+    readonly id: FieldRef<"Sale", 'Int'>
+    readonly quantity: FieldRef<"Sale", 'Int'>
+    readonly price: FieldRef<"Sale", 'Decimal'>
+    readonly total: FieldRef<"Sale", 'Decimal'>
+    readonly saledId: FieldRef<"Sale", 'Int'>
+    readonly productId: FieldRef<"Sale", 'Int'>
+    readonly createdAt: FieldRef<"Sale", 'DateTime'>
+    readonly updatedAt: FieldRef<"Sale", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Sale findUnique
+   */
+  export type SaleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * Filter, which Sale to fetch.
+     */
+    where: SaleWhereUniqueInput
+  }
+
+  /**
+   * Sale findUniqueOrThrow
+   */
+  export type SaleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * Filter, which Sale to fetch.
+     */
+    where: SaleWhereUniqueInput
+  }
+
+  /**
+   * Sale findFirst
+   */
+  export type SaleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * Filter, which Sale to fetch.
+     */
+    where?: SaleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sales to fetch.
+     */
+    orderBy?: SaleOrderByWithRelationInput | SaleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sales.
+     */
+    cursor?: SaleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sales from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sales.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sales.
+     */
+    distinct?: SaleScalarFieldEnum | SaleScalarFieldEnum[]
+  }
+
+  /**
+   * Sale findFirstOrThrow
+   */
+  export type SaleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * Filter, which Sale to fetch.
+     */
+    where?: SaleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sales to fetch.
+     */
+    orderBy?: SaleOrderByWithRelationInput | SaleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sales.
+     */
+    cursor?: SaleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sales from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sales.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sales.
+     */
+    distinct?: SaleScalarFieldEnum | SaleScalarFieldEnum[]
+  }
+
+  /**
+   * Sale findMany
+   */
+  export type SaleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * Filter, which Sales to fetch.
+     */
+    where?: SaleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sales to fetch.
+     */
+    orderBy?: SaleOrderByWithRelationInput | SaleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sales.
+     */
+    cursor?: SaleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sales from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sales.
+     */
+    skip?: number
+    distinct?: SaleScalarFieldEnum | SaleScalarFieldEnum[]
+  }
+
+  /**
+   * Sale create
+   */
+  export type SaleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Sale.
+     */
+    data: XOR<SaleCreateInput, SaleUncheckedCreateInput>
+  }
+
+  /**
+   * Sale createMany
+   */
+  export type SaleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sales.
+     */
+    data: SaleCreateManyInput | SaleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sale createManyAndReturn
+   */
+  export type SaleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sales.
+     */
+    data: SaleCreateManyInput | SaleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Sale update
+   */
+  export type SaleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Sale.
+     */
+    data: XOR<SaleUpdateInput, SaleUncheckedUpdateInput>
+    /**
+     * Choose, which Sale to update.
+     */
+    where: SaleWhereUniqueInput
+  }
+
+  /**
+   * Sale updateMany
+   */
+  export type SaleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sales.
+     */
+    data: XOR<SaleUpdateManyMutationInput, SaleUncheckedUpdateManyInput>
+    /**
+     * Filter which Sales to update
+     */
+    where?: SaleWhereInput
+    /**
+     * Limit how many Sales to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sale updateManyAndReturn
+   */
+  export type SaleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * The data used to update Sales.
+     */
+    data: XOR<SaleUpdateManyMutationInput, SaleUncheckedUpdateManyInput>
+    /**
+     * Filter which Sales to update
+     */
+    where?: SaleWhereInput
+    /**
+     * Limit how many Sales to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Sale upsert
+   */
+  export type SaleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Sale to update in case it exists.
+     */
+    where: SaleWhereUniqueInput
+    /**
+     * In case the Sale found by the `where` argument doesn't exist, create a new Sale with this data.
+     */
+    create: XOR<SaleCreateInput, SaleUncheckedCreateInput>
+    /**
+     * In case the Sale was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SaleUpdateInput, SaleUncheckedUpdateInput>
+  }
+
+  /**
+   * Sale delete
+   */
+  export type SaleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    /**
+     * Filter which Sale to delete.
+     */
+    where: SaleWhereUniqueInput
+  }
+
+  /**
+   * Sale deleteMany
+   */
+  export type SaleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sales to delete
+     */
+    where?: SaleWhereInput
+    /**
+     * Limit how many Sales to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sale.saledBy
+   */
+  export type Sale$saledByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    where?: ProfileWhereInput
+  }
+
+  /**
+   * Sale without action
+   */
+  export type SaleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
   }
 
 
@@ -10874,7 +12341,6 @@ export namespace Prisma {
     middlename: 'middlename',
     lastname: 'lastname',
     suffix: 'suffix',
-    storeId: 'storeId',
     approved: 'approved',
     approved_date: 'approved_date',
     verified: 'verified',
@@ -10901,7 +12367,7 @@ export namespace Prisma {
   export const StoreScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    profileId: 'profileId',
+    ownerId: 'ownerId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -10926,6 +12392,20 @@ export namespace Prisma {
   };
 
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+  export const SaleScalarFieldEnum: {
+    id: 'id',
+    quantity: 'quantity',
+    price: 'price',
+    total: 'total',
+    saledId: 'saledId',
+    productId: 'productId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SaleScalarFieldEnum = (typeof SaleScalarFieldEnum)[keyof typeof SaleScalarFieldEnum]
 
 
   export const CategoryScalarFieldEnum: {
@@ -11294,7 +12774,6 @@ export namespace Prisma {
     middlename?: StringNullableFilter<"Profile"> | string | null
     lastname?: StringFilter<"Profile"> | string
     suffix?: StringNullableFilter<"Profile"> | string | null
-    storeId?: IntFilter<"Profile"> | number
     approved?: BoolNullableFilter<"Profile"> | boolean | null
     approved_date?: DateTimeNullableFilter<"Profile"> | Date | string | null
     verified?: BoolFilter<"Profile"> | boolean
@@ -11302,7 +12781,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    store_owner?: StoreListRelationFilter
+    store_seller?: StoreListRelationFilter
+    sale?: SaleListRelationFilter
     Product?: ProductListRelationFilter
   }
 
@@ -11314,7 +12795,6 @@ export namespace Prisma {
     middlename?: SortOrderInput | SortOrder
     lastname?: SortOrder
     suffix?: SortOrderInput | SortOrder
-    storeId?: SortOrder
     approved?: SortOrderInput | SortOrder
     approved_date?: SortOrderInput | SortOrder
     verified?: SortOrder
@@ -11322,14 +12802,15 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
-    store?: StoreOrderByWithRelationInput
+    store_owner?: StoreOrderByRelationAggregateInput
+    store_seller?: StoreOrderByRelationAggregateInput
+    sale?: SaleOrderByRelationAggregateInput
     Product?: ProductOrderByRelationAggregateInput
   }
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     userId?: number
-    storeId?: number
     AND?: ProfileWhereInput | ProfileWhereInput[]
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
@@ -11345,9 +12826,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    store_owner?: StoreListRelationFilter
+    store_seller?: StoreListRelationFilter
+    sale?: SaleListRelationFilter
     Product?: ProductListRelationFilter
-  }, "id" | "userId" | "storeId">
+  }, "id" | "userId">
 
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11357,7 +12840,6 @@ export namespace Prisma {
     middlename?: SortOrderInput | SortOrder
     lastname?: SortOrder
     suffix?: SortOrderInput | SortOrder
-    storeId?: SortOrder
     approved?: SortOrderInput | SortOrder
     approved_date?: SortOrderInput | SortOrder
     verified?: SortOrder
@@ -11382,7 +12864,6 @@ export namespace Prisma {
     middlename?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     lastname?: StringWithAggregatesFilter<"Profile"> | string
     suffix?: StringNullableWithAggregatesFilter<"Profile"> | string | null
-    storeId?: IntWithAggregatesFilter<"Profile"> | number
     approved?: BoolNullableWithAggregatesFilter<"Profile"> | boolean | null
     approved_date?: DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
     verified?: BoolWithAggregatesFilter<"Profile"> | boolean
@@ -11455,37 +12936,40 @@ export namespace Prisma {
     NOT?: StoreWhereInput | StoreWhereInput[]
     id?: IntFilter<"Store"> | number
     name?: StringFilter<"Store"> | string
-    profileId?: IntNullableFilter<"Store"> | number | null
+    ownerId?: IntNullableFilter<"Store"> | number | null
     createdAt?: DateTimeFilter<"Store"> | Date | string
     updatedAt?: DateTimeFilter<"Store"> | Date | string
-    profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    owner?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    seller?: ProfileListRelationFilter
   }
 
   export type StoreOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    profileId?: SortOrderInput | SortOrder
+    ownerId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    profile?: ProfileOrderByWithRelationInput
+    owner?: ProfileOrderByWithRelationInput
+    seller?: ProfileOrderByRelationAggregateInput
   }
 
   export type StoreWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name?: string
     AND?: StoreWhereInput | StoreWhereInput[]
     OR?: StoreWhereInput[]
     NOT?: StoreWhereInput | StoreWhereInput[]
-    name?: StringFilter<"Store"> | string
-    profileId?: IntNullableFilter<"Store"> | number | null
+    ownerId?: IntNullableFilter<"Store"> | number | null
     createdAt?: DateTimeFilter<"Store"> | Date | string
     updatedAt?: DateTimeFilter<"Store"> | Date | string
-    profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
-  }, "id">
+    owner?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    seller?: ProfileListRelationFilter
+  }, "id" | "name">
 
   export type StoreOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    profileId?: SortOrderInput | SortOrder
+    ownerId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: StoreCountOrderByAggregateInput
@@ -11501,7 +12985,7 @@ export namespace Prisma {
     NOT?: StoreScalarWhereWithAggregatesInput | StoreScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Store"> | number
     name?: StringWithAggregatesFilter<"Store"> | string
-    profileId?: IntNullableWithAggregatesFilter<"Store"> | number | null
+    ownerId?: IntNullableWithAggregatesFilter<"Store"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Store"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Store"> | Date | string
   }
@@ -11525,6 +13009,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
     category?: CategoryListRelationFilter
+    sales?: SaleListRelationFilter
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -11543,6 +13028,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     profile?: ProfileOrderByWithRelationInput
     category?: CategoryOrderByRelationAggregateInput
+    sales?: SaleOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -11564,6 +13050,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
     category?: CategoryListRelationFilter
+    sales?: SaleListRelationFilter
   }, "id">
 
   export type ProductOrderByWithAggregationInput = {
@@ -11604,6 +13091,81 @@ export namespace Prisma {
     unitValue?: IntNullableWithAggregatesFilter<"Product"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
+  }
+
+  export type SaleWhereInput = {
+    AND?: SaleWhereInput | SaleWhereInput[]
+    OR?: SaleWhereInput[]
+    NOT?: SaleWhereInput | SaleWhereInput[]
+    id?: IntFilter<"Sale"> | number
+    quantity?: IntFilter<"Sale"> | number
+    price?: DecimalFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    saledId?: IntNullableFilter<"Sale"> | number | null
+    productId?: IntFilter<"Sale"> | number
+    createdAt?: DateTimeFilter<"Sale"> | Date | string
+    updatedAt?: DateTimeFilter<"Sale"> | Date | string
+    saledBy?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+  }
+
+  export type SaleOrderByWithRelationInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrderInput | SortOrder
+    productId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    saledBy?: ProfileOrderByWithRelationInput
+    product?: ProductOrderByWithRelationInput
+  }
+
+  export type SaleWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SaleWhereInput | SaleWhereInput[]
+    OR?: SaleWhereInput[]
+    NOT?: SaleWhereInput | SaleWhereInput[]
+    quantity?: IntFilter<"Sale"> | number
+    price?: DecimalFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    saledId?: IntNullableFilter<"Sale"> | number | null
+    productId?: IntFilter<"Sale"> | number
+    createdAt?: DateTimeFilter<"Sale"> | Date | string
+    updatedAt?: DateTimeFilter<"Sale"> | Date | string
+    saledBy?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+  }, "id">
+
+  export type SaleOrderByWithAggregationInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrderInput | SortOrder
+    productId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SaleCountOrderByAggregateInput
+    _avg?: SaleAvgOrderByAggregateInput
+    _max?: SaleMaxOrderByAggregateInput
+    _min?: SaleMinOrderByAggregateInput
+    _sum?: SaleSumOrderByAggregateInput
+  }
+
+  export type SaleScalarWhereWithAggregatesInput = {
+    AND?: SaleScalarWhereWithAggregatesInput | SaleScalarWhereWithAggregatesInput[]
+    OR?: SaleScalarWhereWithAggregatesInput[]
+    NOT?: SaleScalarWhereWithAggregatesInput | SaleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Sale"> | number
+    quantity?: IntWithAggregatesFilter<"Sale"> | number
+    price?: DecimalWithAggregatesFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalWithAggregatesFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    saledId?: IntNullableWithAggregatesFilter<"Sale"> | number | null
+    productId?: IntWithAggregatesFilter<"Sale"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Sale"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Sale"> | Date | string
   }
 
   export type CategoryWhereInput = {
@@ -11909,7 +13471,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProfileInput
-    store: StoreCreateNestedOneWithoutProfileInput
+    store_owner?: StoreCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreCreateNestedManyWithoutSellerInput
+    sale?: SaleCreateNestedManyWithoutSaledByInput
     Product?: ProductCreateNestedManyWithoutProfileInput
   }
 
@@ -11921,13 +13485,15 @@ export namespace Prisma {
     middlename?: string | null
     lastname: string
     suffix?: string | null
-    storeId: number
     approved?: boolean | null
     approved_date?: Date | string | null
     verified?: boolean
     verified_date?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    store_owner?: StoreUncheckedCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreUncheckedCreateNestedManyWithoutSellerInput
+    sale?: SaleUncheckedCreateNestedManyWithoutSaledByInput
     Product?: ProductUncheckedCreateNestedManyWithoutProfileInput
   }
 
@@ -11944,7 +13510,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
-    store?: StoreUpdateOneRequiredWithoutProfileNestedInput
+    store_owner?: StoreUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUpdateManyWithoutSellerNestedInput
+    sale?: SaleUpdateManyWithoutSaledByNestedInput
     Product?: ProductUpdateManyWithoutProfileNestedInput
   }
 
@@ -11956,13 +13524,15 @@ export namespace Prisma {
     middlename?: NullableStringFieldUpdateOperationsInput | string | null
     lastname?: StringFieldUpdateOperationsInput | string
     suffix?: NullableStringFieldUpdateOperationsInput | string | null
-    storeId?: IntFieldUpdateOperationsInput | number
     approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
     approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_owner?: StoreUncheckedUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUncheckedUpdateManyWithoutSellerNestedInput
+    sale?: SaleUncheckedUpdateManyWithoutSaledByNestedInput
     Product?: ProductUncheckedUpdateManyWithoutProfileNestedInput
   }
 
@@ -11974,7 +13544,6 @@ export namespace Prisma {
     middlename?: string | null
     lastname: string
     suffix?: string | null
-    storeId: number
     approved?: boolean | null
     approved_date?: Date | string | null
     verified?: boolean
@@ -12005,7 +13574,6 @@ export namespace Prisma {
     middlename?: NullableStringFieldUpdateOperationsInput | string | null
     lastname?: StringFieldUpdateOperationsInput | string
     suffix?: NullableStringFieldUpdateOperationsInput | string | null
-    storeId?: IntFieldUpdateOperationsInput | number
     approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
     approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
@@ -12079,49 +13647,48 @@ export namespace Prisma {
 
   export type StoreCreateInput = {
     name: string
-    profileId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: ProfileCreateNestedOneWithoutStoreInput
+    owner?: ProfileCreateNestedOneWithoutStore_ownerInput
+    seller?: ProfileCreateNestedManyWithoutStore_sellerInput
   }
 
   export type StoreUncheckedCreateInput = {
     id?: number
     name: string
-    profileId?: number | null
+    ownerId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: ProfileUncheckedCreateNestedOneWithoutStoreInput
+    seller?: ProfileUncheckedCreateNestedManyWithoutStore_sellerInput
   }
 
   export type StoreUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: ProfileUpdateOneWithoutStoreNestedInput
+    owner?: ProfileUpdateOneWithoutStore_ownerNestedInput
+    seller?: ProfileUpdateManyWithoutStore_sellerNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableIntFieldUpdateOperationsInput | number | null
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: ProfileUncheckedUpdateOneWithoutStoreNestedInput
+    seller?: ProfileUncheckedUpdateManyWithoutStore_sellerNestedInput
   }
 
   export type StoreCreateManyInput = {
     id?: number
     name: string
-    profileId?: number | null
+    ownerId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type StoreUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12129,7 +13696,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableIntFieldUpdateOperationsInput | number | null
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12148,6 +13715,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     profile: ProfileCreateNestedOneWithoutProductInput
     category?: CategoryCreateNestedManyWithoutProductsInput
+    sales?: SaleCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -12165,6 +13733,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     category?: CategoryUncheckedCreateNestedManyWithoutProductsInput
+    sales?: SaleUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductUpdateInput = {
@@ -12181,6 +13750,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUpdateOneRequiredWithoutProductNestedInput
     category?: CategoryUpdateManyWithoutProductsNestedInput
+    sales?: SaleUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -12198,6 +13768,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUncheckedUpdateManyWithoutProductsNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductCreateManyInput = {
@@ -12242,6 +13813,78 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitValue?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleCreateInput = {
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    saledBy?: ProfileCreateNestedOneWithoutSaleInput
+    product: ProductCreateNestedOneWithoutSalesInput
+  }
+
+  export type SaleUncheckedCreateInput = {
+    id?: number
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    saledId?: number | null
+    productId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SaleUpdateInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    saledBy?: ProfileUpdateOneWithoutSaleNestedInput
+    product?: ProductUpdateOneRequiredWithoutSalesNestedInput
+  }
+
+  export type SaleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    saledId?: NullableIntFieldUpdateOperationsInput | number | null
+    productId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleCreateManyInput = {
+    id?: number
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    saledId?: number | null
+    productId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SaleUpdateManyMutationInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    saledId?: NullableIntFieldUpdateOperationsInput | number | null
+    productId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12632,15 +14275,30 @@ export namespace Prisma {
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
-  export type StoreScalarRelationFilter = {
-    is?: StoreWhereInput
-    isNot?: StoreWhereInput
+  export type StoreListRelationFilter = {
+    every?: StoreWhereInput
+    some?: StoreWhereInput
+    none?: StoreWhereInput
+  }
+
+  export type SaleListRelationFilter = {
+    every?: SaleWhereInput
+    some?: SaleWhereInput
+    none?: SaleWhereInput
   }
 
   export type ProductListRelationFilter = {
     every?: ProductWhereInput
     some?: ProductWhereInput
     none?: ProductWhereInput
+  }
+
+  export type StoreOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SaleOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ProductOrderByRelationAggregateInput = {
@@ -12655,7 +14313,6 @@ export namespace Prisma {
     middlename?: SortOrder
     lastname?: SortOrder
     suffix?: SortOrder
-    storeId?: SortOrder
     approved?: SortOrder
     approved_date?: SortOrder
     verified?: SortOrder
@@ -12667,7 +14324,6 @@ export namespace Prisma {
   export type ProfileAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    storeId?: SortOrder
   }
 
   export type ProfileMaxOrderByAggregateInput = {
@@ -12678,7 +14334,6 @@ export namespace Prisma {
     middlename?: SortOrder
     lastname?: SortOrder
     suffix?: SortOrder
-    storeId?: SortOrder
     approved?: SortOrder
     approved_date?: SortOrder
     verified?: SortOrder
@@ -12695,7 +14350,6 @@ export namespace Prisma {
     middlename?: SortOrder
     lastname?: SortOrder
     suffix?: SortOrder
-    storeId?: SortOrder
     approved?: SortOrder
     approved_date?: SortOrder
     verified?: SortOrder
@@ -12707,7 +14361,6 @@ export namespace Prisma {
   export type ProfileSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    storeId?: SortOrder
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12761,23 +14414,33 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type ProfileListRelationFilter = {
+    every?: ProfileWhereInput
+    some?: ProfileWhereInput
+    none?: ProfileWhereInput
+  }
+
+  export type ProfileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type StoreCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    profileId?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type StoreAvgOrderByAggregateInput = {
     id?: SortOrder
-    profileId?: SortOrder
+    ownerId?: SortOrder
   }
 
   export type StoreMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    profileId?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12785,14 +14448,14 @@ export namespace Prisma {
   export type StoreMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    profileId?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type StoreSumOrderByAggregateInput = {
     id?: SortOrder
-    profileId?: SortOrder
+    ownerId?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12915,6 +14578,62 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type ProductScalarRelationFilter = {
+    is?: ProductWhereInput
+    isNot?: ProductWhereInput
+  }
+
+  export type SaleCountOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrder
+    productId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SaleAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrder
+    productId?: SortOrder
+  }
+
+  export type SaleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrder
+    productId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SaleMinOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrder
+    productId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SaleSumOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+    price?: SortOrder
+    total?: SortOrder
+    saledId?: SortOrder
+    productId?: SortOrder
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -13128,10 +14847,24 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type StoreCreateNestedOneWithoutProfileInput = {
-    create?: XOR<StoreCreateWithoutProfileInput, StoreUncheckedCreateWithoutProfileInput>
-    connectOrCreate?: StoreCreateOrConnectWithoutProfileInput
-    connect?: StoreWhereUniqueInput
+  export type StoreCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<StoreCreateWithoutOwnerInput, StoreUncheckedCreateWithoutOwnerInput> | StoreCreateWithoutOwnerInput[] | StoreUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutOwnerInput | StoreCreateOrConnectWithoutOwnerInput[]
+    createMany?: StoreCreateManyOwnerInputEnvelope
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+  }
+
+  export type StoreCreateNestedManyWithoutSellerInput = {
+    create?: XOR<StoreCreateWithoutSellerInput, StoreUncheckedCreateWithoutSellerInput> | StoreCreateWithoutSellerInput[] | StoreUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutSellerInput | StoreCreateOrConnectWithoutSellerInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+  }
+
+  export type SaleCreateNestedManyWithoutSaledByInput = {
+    create?: XOR<SaleCreateWithoutSaledByInput, SaleUncheckedCreateWithoutSaledByInput> | SaleCreateWithoutSaledByInput[] | SaleUncheckedCreateWithoutSaledByInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutSaledByInput | SaleCreateOrConnectWithoutSaledByInput[]
+    createMany?: SaleCreateManySaledByInputEnvelope
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
   }
 
   export type ProductCreateNestedManyWithoutProfileInput = {
@@ -13139,6 +14872,26 @@ export namespace Prisma {
     connectOrCreate?: ProductCreateOrConnectWithoutProfileInput | ProductCreateOrConnectWithoutProfileInput[]
     createMany?: ProductCreateManyProfileInputEnvelope
     connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+  }
+
+  export type StoreUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<StoreCreateWithoutOwnerInput, StoreUncheckedCreateWithoutOwnerInput> | StoreCreateWithoutOwnerInput[] | StoreUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutOwnerInput | StoreCreateOrConnectWithoutOwnerInput[]
+    createMany?: StoreCreateManyOwnerInputEnvelope
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+  }
+
+  export type StoreUncheckedCreateNestedManyWithoutSellerInput = {
+    create?: XOR<StoreCreateWithoutSellerInput, StoreUncheckedCreateWithoutSellerInput> | StoreCreateWithoutSellerInput[] | StoreUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutSellerInput | StoreCreateOrConnectWithoutSellerInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+  }
+
+  export type SaleUncheckedCreateNestedManyWithoutSaledByInput = {
+    create?: XOR<SaleCreateWithoutSaledByInput, SaleUncheckedCreateWithoutSaledByInput> | SaleCreateWithoutSaledByInput[] | SaleUncheckedCreateWithoutSaledByInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutSaledByInput | SaleCreateOrConnectWithoutSaledByInput[]
+    createMany?: SaleCreateManySaledByInputEnvelope
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
   }
 
   export type ProductUncheckedCreateNestedManyWithoutProfileInput = {
@@ -13160,12 +14913,45 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfileInput, UserUpdateWithoutProfileInput>, UserUncheckedUpdateWithoutProfileInput>
   }
 
-  export type StoreUpdateOneRequiredWithoutProfileNestedInput = {
-    create?: XOR<StoreCreateWithoutProfileInput, StoreUncheckedCreateWithoutProfileInput>
-    connectOrCreate?: StoreCreateOrConnectWithoutProfileInput
-    upsert?: StoreUpsertWithoutProfileInput
-    connect?: StoreWhereUniqueInput
-    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutProfileInput, StoreUpdateWithoutProfileInput>, StoreUncheckedUpdateWithoutProfileInput>
+  export type StoreUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<StoreCreateWithoutOwnerInput, StoreUncheckedCreateWithoutOwnerInput> | StoreCreateWithoutOwnerInput[] | StoreUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutOwnerInput | StoreCreateOrConnectWithoutOwnerInput[]
+    upsert?: StoreUpsertWithWhereUniqueWithoutOwnerInput | StoreUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: StoreCreateManyOwnerInputEnvelope
+    set?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    disconnect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    delete?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    update?: StoreUpdateWithWhereUniqueWithoutOwnerInput | StoreUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: StoreUpdateManyWithWhereWithoutOwnerInput | StoreUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
+  }
+
+  export type StoreUpdateManyWithoutSellerNestedInput = {
+    create?: XOR<StoreCreateWithoutSellerInput, StoreUncheckedCreateWithoutSellerInput> | StoreCreateWithoutSellerInput[] | StoreUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutSellerInput | StoreCreateOrConnectWithoutSellerInput[]
+    upsert?: StoreUpsertWithWhereUniqueWithoutSellerInput | StoreUpsertWithWhereUniqueWithoutSellerInput[]
+    set?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    disconnect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    delete?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    update?: StoreUpdateWithWhereUniqueWithoutSellerInput | StoreUpdateWithWhereUniqueWithoutSellerInput[]
+    updateMany?: StoreUpdateManyWithWhereWithoutSellerInput | StoreUpdateManyWithWhereWithoutSellerInput[]
+    deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
+  }
+
+  export type SaleUpdateManyWithoutSaledByNestedInput = {
+    create?: XOR<SaleCreateWithoutSaledByInput, SaleUncheckedCreateWithoutSaledByInput> | SaleCreateWithoutSaledByInput[] | SaleUncheckedCreateWithoutSaledByInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutSaledByInput | SaleCreateOrConnectWithoutSaledByInput[]
+    upsert?: SaleUpsertWithWhereUniqueWithoutSaledByInput | SaleUpsertWithWhereUniqueWithoutSaledByInput[]
+    createMany?: SaleCreateManySaledByInputEnvelope
+    set?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    disconnect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    delete?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    update?: SaleUpdateWithWhereUniqueWithoutSaledByInput | SaleUpdateWithWhereUniqueWithoutSaledByInput[]
+    updateMany?: SaleUpdateManyWithWhereWithoutSaledByInput | SaleUpdateManyWithWhereWithoutSaledByInput[]
+    deleteMany?: SaleScalarWhereInput | SaleScalarWhereInput[]
   }
 
   export type ProductUpdateManyWithoutProfileNestedInput = {
@@ -13182,6 +14968,47 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
+  export type StoreUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<StoreCreateWithoutOwnerInput, StoreUncheckedCreateWithoutOwnerInput> | StoreCreateWithoutOwnerInput[] | StoreUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutOwnerInput | StoreCreateOrConnectWithoutOwnerInput[]
+    upsert?: StoreUpsertWithWhereUniqueWithoutOwnerInput | StoreUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: StoreCreateManyOwnerInputEnvelope
+    set?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    disconnect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    delete?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    update?: StoreUpdateWithWhereUniqueWithoutOwnerInput | StoreUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: StoreUpdateManyWithWhereWithoutOwnerInput | StoreUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
+  }
+
+  export type StoreUncheckedUpdateManyWithoutSellerNestedInput = {
+    create?: XOR<StoreCreateWithoutSellerInput, StoreUncheckedCreateWithoutSellerInput> | StoreCreateWithoutSellerInput[] | StoreUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutSellerInput | StoreCreateOrConnectWithoutSellerInput[]
+    upsert?: StoreUpsertWithWhereUniqueWithoutSellerInput | StoreUpsertWithWhereUniqueWithoutSellerInput[]
+    set?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    disconnect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    delete?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    update?: StoreUpdateWithWhereUniqueWithoutSellerInput | StoreUpdateWithWhereUniqueWithoutSellerInput[]
+    updateMany?: StoreUpdateManyWithWhereWithoutSellerInput | StoreUpdateManyWithWhereWithoutSellerInput[]
+    deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
+  }
+
+  export type SaleUncheckedUpdateManyWithoutSaledByNestedInput = {
+    create?: XOR<SaleCreateWithoutSaledByInput, SaleUncheckedCreateWithoutSaledByInput> | SaleCreateWithoutSaledByInput[] | SaleUncheckedCreateWithoutSaledByInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutSaledByInput | SaleCreateOrConnectWithoutSaledByInput[]
+    upsert?: SaleUpsertWithWhereUniqueWithoutSaledByInput | SaleUpsertWithWhereUniqueWithoutSaledByInput[]
+    createMany?: SaleCreateManySaledByInputEnvelope
+    set?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    disconnect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    delete?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    update?: SaleUpdateWithWhereUniqueWithoutSaledByInput | SaleUpdateWithWhereUniqueWithoutSaledByInput[]
+    updateMany?: SaleUpdateManyWithWhereWithoutSaledByInput | SaleUpdateManyWithWhereWithoutSaledByInput[]
+    deleteMany?: SaleScalarWhereInput | SaleScalarWhereInput[]
+  }
+
   export type ProductUncheckedUpdateManyWithoutProfileNestedInput = {
     create?: XOR<ProductCreateWithoutProfileInput, ProductUncheckedCreateWithoutProfileInput> | ProductCreateWithoutProfileInput[] | ProductUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: ProductCreateOrConnectWithoutProfileInput | ProductCreateOrConnectWithoutProfileInput[]
@@ -13196,16 +15023,45 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
-  export type ProfileCreateNestedOneWithoutStoreInput = {
-    create?: XOR<ProfileCreateWithoutStoreInput, ProfileUncheckedCreateWithoutStoreInput>
-    connectOrCreate?: ProfileCreateOrConnectWithoutStoreInput
+  export type ProfileCreateNestedOneWithoutStore_ownerInput = {
+    create?: XOR<ProfileCreateWithoutStore_ownerInput, ProfileUncheckedCreateWithoutStore_ownerInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutStore_ownerInput
     connect?: ProfileWhereUniqueInput
   }
 
-  export type ProfileUncheckedCreateNestedOneWithoutStoreInput = {
-    create?: XOR<ProfileCreateWithoutStoreInput, ProfileUncheckedCreateWithoutStoreInput>
-    connectOrCreate?: ProfileCreateOrConnectWithoutStoreInput
+  export type ProfileCreateNestedManyWithoutStore_sellerInput = {
+    create?: XOR<ProfileCreateWithoutStore_sellerInput, ProfileUncheckedCreateWithoutStore_sellerInput> | ProfileCreateWithoutStore_sellerInput[] | ProfileUncheckedCreateWithoutStore_sellerInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutStore_sellerInput | ProfileCreateOrConnectWithoutStore_sellerInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+  }
+
+  export type ProfileUncheckedCreateNestedManyWithoutStore_sellerInput = {
+    create?: XOR<ProfileCreateWithoutStore_sellerInput, ProfileUncheckedCreateWithoutStore_sellerInput> | ProfileCreateWithoutStore_sellerInput[] | ProfileUncheckedCreateWithoutStore_sellerInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutStore_sellerInput | ProfileCreateOrConnectWithoutStore_sellerInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+  }
+
+  export type ProfileUpdateOneWithoutStore_ownerNestedInput = {
+    create?: XOR<ProfileCreateWithoutStore_ownerInput, ProfileUncheckedCreateWithoutStore_ownerInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutStore_ownerInput
+    upsert?: ProfileUpsertWithoutStore_ownerInput
+    disconnect?: ProfileWhereInput | boolean
+    delete?: ProfileWhereInput | boolean
     connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutStore_ownerInput, ProfileUpdateWithoutStore_ownerInput>, ProfileUncheckedUpdateWithoutStore_ownerInput>
+  }
+
+  export type ProfileUpdateManyWithoutStore_sellerNestedInput = {
+    create?: XOR<ProfileCreateWithoutStore_sellerInput, ProfileUncheckedCreateWithoutStore_sellerInput> | ProfileCreateWithoutStore_sellerInput[] | ProfileUncheckedCreateWithoutStore_sellerInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutStore_sellerInput | ProfileCreateOrConnectWithoutStore_sellerInput[]
+    upsert?: ProfileUpsertWithWhereUniqueWithoutStore_sellerInput | ProfileUpsertWithWhereUniqueWithoutStore_sellerInput[]
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    update?: ProfileUpdateWithWhereUniqueWithoutStore_sellerInput | ProfileUpdateWithWhereUniqueWithoutStore_sellerInput[]
+    updateMany?: ProfileUpdateManyWithWhereWithoutStore_sellerInput | ProfileUpdateManyWithWhereWithoutStore_sellerInput[]
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -13216,24 +15072,17 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ProfileUpdateOneWithoutStoreNestedInput = {
-    create?: XOR<ProfileCreateWithoutStoreInput, ProfileUncheckedCreateWithoutStoreInput>
-    connectOrCreate?: ProfileCreateOrConnectWithoutStoreInput
-    upsert?: ProfileUpsertWithoutStoreInput
-    disconnect?: ProfileWhereInput | boolean
-    delete?: ProfileWhereInput | boolean
-    connect?: ProfileWhereUniqueInput
-    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutStoreInput, ProfileUpdateWithoutStoreInput>, ProfileUncheckedUpdateWithoutStoreInput>
-  }
-
-  export type ProfileUncheckedUpdateOneWithoutStoreNestedInput = {
-    create?: XOR<ProfileCreateWithoutStoreInput, ProfileUncheckedCreateWithoutStoreInput>
-    connectOrCreate?: ProfileCreateOrConnectWithoutStoreInput
-    upsert?: ProfileUpsertWithoutStoreInput
-    disconnect?: ProfileWhereInput | boolean
-    delete?: ProfileWhereInput | boolean
-    connect?: ProfileWhereUniqueInput
-    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutStoreInput, ProfileUpdateWithoutStoreInput>, ProfileUncheckedUpdateWithoutStoreInput>
+  export type ProfileUncheckedUpdateManyWithoutStore_sellerNestedInput = {
+    create?: XOR<ProfileCreateWithoutStore_sellerInput, ProfileUncheckedCreateWithoutStore_sellerInput> | ProfileCreateWithoutStore_sellerInput[] | ProfileUncheckedCreateWithoutStore_sellerInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutStore_sellerInput | ProfileCreateOrConnectWithoutStore_sellerInput[]
+    upsert?: ProfileUpsertWithWhereUniqueWithoutStore_sellerInput | ProfileUpsertWithWhereUniqueWithoutStore_sellerInput[]
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    update?: ProfileUpdateWithWhereUniqueWithoutStore_sellerInput | ProfileUpdateWithWhereUniqueWithoutStore_sellerInput[]
+    updateMany?: ProfileUpdateManyWithWhereWithoutStore_sellerInput | ProfileUpdateManyWithWhereWithoutStore_sellerInput[]
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
   }
 
   export type ProfileCreateNestedOneWithoutProductInput = {
@@ -13248,10 +15097,24 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
+  export type SaleCreateNestedManyWithoutProductInput = {
+    create?: XOR<SaleCreateWithoutProductInput, SaleUncheckedCreateWithoutProductInput> | SaleCreateWithoutProductInput[] | SaleUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutProductInput | SaleCreateOrConnectWithoutProductInput[]
+    createMany?: SaleCreateManyProductInputEnvelope
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+  }
+
   export type CategoryUncheckedCreateNestedManyWithoutProductsInput = {
     create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput> | CategoryCreateWithoutProductsInput[] | CategoryUncheckedCreateWithoutProductsInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput | CategoryCreateOrConnectWithoutProductsInput[]
     connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+  }
+
+  export type SaleUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<SaleCreateWithoutProductInput, SaleUncheckedCreateWithoutProductInput> | SaleCreateWithoutProductInput[] | SaleUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutProductInput | SaleCreateOrConnectWithoutProductInput[]
+    createMany?: SaleCreateManyProductInputEnvelope
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
   }
 
   export type DecimalFieldUpdateOperationsInput = {
@@ -13283,6 +15146,20 @@ export namespace Prisma {
     deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
   }
 
+  export type SaleUpdateManyWithoutProductNestedInput = {
+    create?: XOR<SaleCreateWithoutProductInput, SaleUncheckedCreateWithoutProductInput> | SaleCreateWithoutProductInput[] | SaleUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutProductInput | SaleCreateOrConnectWithoutProductInput[]
+    upsert?: SaleUpsertWithWhereUniqueWithoutProductInput | SaleUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: SaleCreateManyProductInputEnvelope
+    set?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    disconnect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    delete?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    update?: SaleUpdateWithWhereUniqueWithoutProductInput | SaleUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: SaleUpdateManyWithWhereWithoutProductInput | SaleUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: SaleScalarWhereInput | SaleScalarWhereInput[]
+  }
+
   export type CategoryUncheckedUpdateManyWithoutProductsNestedInput = {
     create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput> | CategoryCreateWithoutProductsInput[] | CategoryUncheckedCreateWithoutProductsInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput | CategoryCreateOrConnectWithoutProductsInput[]
@@ -13294,6 +15171,50 @@ export namespace Prisma {
     update?: CategoryUpdateWithWhereUniqueWithoutProductsInput | CategoryUpdateWithWhereUniqueWithoutProductsInput[]
     updateMany?: CategoryUpdateManyWithWhereWithoutProductsInput | CategoryUpdateManyWithWhereWithoutProductsInput[]
     deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+  }
+
+  export type SaleUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<SaleCreateWithoutProductInput, SaleUncheckedCreateWithoutProductInput> | SaleCreateWithoutProductInput[] | SaleUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SaleCreateOrConnectWithoutProductInput | SaleCreateOrConnectWithoutProductInput[]
+    upsert?: SaleUpsertWithWhereUniqueWithoutProductInput | SaleUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: SaleCreateManyProductInputEnvelope
+    set?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    disconnect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    delete?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
+    update?: SaleUpdateWithWhereUniqueWithoutProductInput | SaleUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: SaleUpdateManyWithWhereWithoutProductInput | SaleUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: SaleScalarWhereInput | SaleScalarWhereInput[]
+  }
+
+  export type ProfileCreateNestedOneWithoutSaleInput = {
+    create?: XOR<ProfileCreateWithoutSaleInput, ProfileUncheckedCreateWithoutSaleInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutSaleInput
+    connect?: ProfileWhereUniqueInput
+  }
+
+  export type ProductCreateNestedOneWithoutSalesInput = {
+    create?: XOR<ProductCreateWithoutSalesInput, ProductUncheckedCreateWithoutSalesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutSalesInput
+    connect?: ProductWhereUniqueInput
+  }
+
+  export type ProfileUpdateOneWithoutSaleNestedInput = {
+    create?: XOR<ProfileCreateWithoutSaleInput, ProfileUncheckedCreateWithoutSaleInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutSaleInput
+    upsert?: ProfileUpsertWithoutSaleInput
+    disconnect?: ProfileWhereInput | boolean
+    delete?: ProfileWhereInput | boolean
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutSaleInput, ProfileUpdateWithoutSaleInput>, ProfileUncheckedUpdateWithoutSaleInput>
+  }
+
+  export type ProductUpdateOneRequiredWithoutSalesNestedInput = {
+    create?: XOR<ProductCreateWithoutSalesInput, ProductUncheckedCreateWithoutSalesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutSalesInput
+    upsert?: ProductUpsertWithoutSalesInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutSalesInput, ProductUpdateWithoutSalesInput>, ProductUncheckedUpdateWithoutSalesInput>
   }
 
   export type ProductCreateNestedManyWithoutCategoryInput = {
@@ -13752,7 +15673,9 @@ export namespace Prisma {
     verified_date?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    store: StoreCreateNestedOneWithoutProfileInput
+    store_owner?: StoreCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreCreateNestedManyWithoutSellerInput
+    sale?: SaleCreateNestedManyWithoutSaledByInput
     Product?: ProductCreateNestedManyWithoutProfileInput
   }
 
@@ -13763,13 +15686,15 @@ export namespace Prisma {
     middlename?: string | null
     lastname: string
     suffix?: string | null
-    storeId: number
     approved?: boolean | null
     approved_date?: Date | string | null
     verified?: boolean
     verified_date?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    store_owner?: StoreUncheckedCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreUncheckedCreateNestedManyWithoutSellerInput
+    sale?: SaleUncheckedCreateNestedManyWithoutSaledByInput
     Product?: ProductUncheckedCreateNestedManyWithoutProfileInput
   }
 
@@ -13857,7 +15782,9 @@ export namespace Prisma {
     verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    store?: StoreUpdateOneRequiredWithoutProfileNestedInput
+    store_owner?: StoreUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUpdateManyWithoutSellerNestedInput
+    sale?: SaleUpdateManyWithoutSaledByNestedInput
     Product?: ProductUpdateManyWithoutProfileNestedInput
   }
 
@@ -13868,13 +15795,15 @@ export namespace Prisma {
     middlename?: NullableStringFieldUpdateOperationsInput | string | null
     lastname?: StringFieldUpdateOperationsInput | string
     suffix?: NullableStringFieldUpdateOperationsInput | string | null
-    storeId?: IntFieldUpdateOperationsInput | number
     approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
     approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_owner?: StoreUncheckedUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUncheckedUpdateManyWithoutSellerNestedInput
+    sale?: SaleUncheckedUpdateManyWithoutSaledByNestedInput
     Product?: ProductUncheckedUpdateManyWithoutProfileNestedInput
   }
 
@@ -13970,24 +15899,78 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
   }
 
-  export type StoreCreateWithoutProfileInput = {
+  export type StoreCreateWithoutOwnerInput = {
     name: string
-    profileId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    seller?: ProfileCreateNestedManyWithoutStore_sellerInput
   }
 
-  export type StoreUncheckedCreateWithoutProfileInput = {
+  export type StoreUncheckedCreateWithoutOwnerInput = {
     id?: number
     name: string
-    profileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seller?: ProfileUncheckedCreateNestedManyWithoutStore_sellerInput
+  }
+
+  export type StoreCreateOrConnectWithoutOwnerInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutOwnerInput, StoreUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type StoreCreateManyOwnerInputEnvelope = {
+    data: StoreCreateManyOwnerInput | StoreCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StoreCreateWithoutSellerInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner?: ProfileCreateNestedOneWithoutStore_ownerInput
+  }
+
+  export type StoreUncheckedCreateWithoutSellerInput = {
+    id?: number
+    name: string
+    ownerId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type StoreCreateOrConnectWithoutProfileInput = {
+  export type StoreCreateOrConnectWithoutSellerInput = {
     where: StoreWhereUniqueInput
-    create: XOR<StoreCreateWithoutProfileInput, StoreUncheckedCreateWithoutProfileInput>
+    create: XOR<StoreCreateWithoutSellerInput, StoreUncheckedCreateWithoutSellerInput>
+  }
+
+  export type SaleCreateWithoutSaledByInput = {
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    product: ProductCreateNestedOneWithoutSalesInput
+  }
+
+  export type SaleUncheckedCreateWithoutSaledByInput = {
+    id?: number
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    productId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SaleCreateOrConnectWithoutSaledByInput = {
+    where: SaleWhereUniqueInput
+    create: XOR<SaleCreateWithoutSaledByInput, SaleUncheckedCreateWithoutSaledByInput>
+  }
+
+  export type SaleCreateManySaledByInputEnvelope = {
+    data: SaleCreateManySaledByInput | SaleCreateManySaledByInput[]
+    skipDuplicates?: boolean
   }
 
   export type ProductCreateWithoutProfileInput = {
@@ -14003,6 +15986,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     category?: CategoryCreateNestedManyWithoutProductsInput
+    sales?: SaleCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutProfileInput = {
@@ -14019,6 +16003,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     category?: CategoryUncheckedCreateNestedManyWithoutProductsInput
+    sales?: SaleUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutProfileInput = {
@@ -14071,30 +16056,77 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type StoreUpsertWithoutProfileInput = {
-    update: XOR<StoreUpdateWithoutProfileInput, StoreUncheckedUpdateWithoutProfileInput>
-    create: XOR<StoreCreateWithoutProfileInput, StoreUncheckedCreateWithoutProfileInput>
-    where?: StoreWhereInput
+  export type StoreUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: StoreWhereUniqueInput
+    update: XOR<StoreUpdateWithoutOwnerInput, StoreUncheckedUpdateWithoutOwnerInput>
+    create: XOR<StoreCreateWithoutOwnerInput, StoreUncheckedCreateWithoutOwnerInput>
   }
 
-  export type StoreUpdateToOneWithWhereWithoutProfileInput = {
-    where?: StoreWhereInput
-    data: XOR<StoreUpdateWithoutProfileInput, StoreUncheckedUpdateWithoutProfileInput>
+  export type StoreUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: StoreWhereUniqueInput
+    data: XOR<StoreUpdateWithoutOwnerInput, StoreUncheckedUpdateWithoutOwnerInput>
   }
 
-  export type StoreUpdateWithoutProfileInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type StoreUpdateManyWithWhereWithoutOwnerInput = {
+    where: StoreScalarWhereInput
+    data: XOR<StoreUpdateManyMutationInput, StoreUncheckedUpdateManyWithoutOwnerInput>
   }
 
-  export type StoreUncheckedUpdateWithoutProfileInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type StoreScalarWhereInput = {
+    AND?: StoreScalarWhereInput | StoreScalarWhereInput[]
+    OR?: StoreScalarWhereInput[]
+    NOT?: StoreScalarWhereInput | StoreScalarWhereInput[]
+    id?: IntFilter<"Store"> | number
+    name?: StringFilter<"Store"> | string
+    ownerId?: IntNullableFilter<"Store"> | number | null
+    createdAt?: DateTimeFilter<"Store"> | Date | string
+    updatedAt?: DateTimeFilter<"Store"> | Date | string
+  }
+
+  export type StoreUpsertWithWhereUniqueWithoutSellerInput = {
+    where: StoreWhereUniqueInput
+    update: XOR<StoreUpdateWithoutSellerInput, StoreUncheckedUpdateWithoutSellerInput>
+    create: XOR<StoreCreateWithoutSellerInput, StoreUncheckedCreateWithoutSellerInput>
+  }
+
+  export type StoreUpdateWithWhereUniqueWithoutSellerInput = {
+    where: StoreWhereUniqueInput
+    data: XOR<StoreUpdateWithoutSellerInput, StoreUncheckedUpdateWithoutSellerInput>
+  }
+
+  export type StoreUpdateManyWithWhereWithoutSellerInput = {
+    where: StoreScalarWhereInput
+    data: XOR<StoreUpdateManyMutationInput, StoreUncheckedUpdateManyWithoutSellerInput>
+  }
+
+  export type SaleUpsertWithWhereUniqueWithoutSaledByInput = {
+    where: SaleWhereUniqueInput
+    update: XOR<SaleUpdateWithoutSaledByInput, SaleUncheckedUpdateWithoutSaledByInput>
+    create: XOR<SaleCreateWithoutSaledByInput, SaleUncheckedCreateWithoutSaledByInput>
+  }
+
+  export type SaleUpdateWithWhereUniqueWithoutSaledByInput = {
+    where: SaleWhereUniqueInput
+    data: XOR<SaleUpdateWithoutSaledByInput, SaleUncheckedUpdateWithoutSaledByInput>
+  }
+
+  export type SaleUpdateManyWithWhereWithoutSaledByInput = {
+    where: SaleScalarWhereInput
+    data: XOR<SaleUpdateManyMutationInput, SaleUncheckedUpdateManyWithoutSaledByInput>
+  }
+
+  export type SaleScalarWhereInput = {
+    AND?: SaleScalarWhereInput | SaleScalarWhereInput[]
+    OR?: SaleScalarWhereInput[]
+    NOT?: SaleScalarWhereInput | SaleScalarWhereInput[]
+    id?: IntFilter<"Sale"> | number
+    quantity?: IntFilter<"Sale"> | number
+    price?: DecimalFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalFilter<"Sale"> | Decimal | DecimalJsLike | number | string
+    saledId?: IntNullableFilter<"Sale"> | number | null
+    productId?: IntFilter<"Sale"> | number
+    createdAt?: DateTimeFilter<"Sale"> | Date | string
+    updatedAt?: DateTimeFilter<"Sale"> | Date | string
   }
 
   export type ProductUpsertWithWhereUniqueWithoutProfileInput = {
@@ -14132,7 +16164,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Product"> | Date | string
   }
 
-  export type ProfileCreateWithoutStoreInput = {
+  export type ProfileCreateWithoutStore_ownerInput = {
     bio: string
     firstname: string
     middlename?: string | null
@@ -14145,10 +16177,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProfileInput
+    store_seller?: StoreCreateNestedManyWithoutSellerInput
+    sale?: SaleCreateNestedManyWithoutSaledByInput
     Product?: ProductCreateNestedManyWithoutProfileInput
   }
 
-  export type ProfileUncheckedCreateWithoutStoreInput = {
+  export type ProfileUncheckedCreateWithoutStore_ownerInput = {
     id?: number
     userId: number
     bio: string
@@ -14162,26 +16196,70 @@ export namespace Prisma {
     verified_date?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    store_seller?: StoreUncheckedCreateNestedManyWithoutSellerInput
+    sale?: SaleUncheckedCreateNestedManyWithoutSaledByInput
     Product?: ProductUncheckedCreateNestedManyWithoutProfileInput
   }
 
-  export type ProfileCreateOrConnectWithoutStoreInput = {
+  export type ProfileCreateOrConnectWithoutStore_ownerInput = {
     where: ProfileWhereUniqueInput
-    create: XOR<ProfileCreateWithoutStoreInput, ProfileUncheckedCreateWithoutStoreInput>
+    create: XOR<ProfileCreateWithoutStore_ownerInput, ProfileUncheckedCreateWithoutStore_ownerInput>
   }
 
-  export type ProfileUpsertWithoutStoreInput = {
-    update: XOR<ProfileUpdateWithoutStoreInput, ProfileUncheckedUpdateWithoutStoreInput>
-    create: XOR<ProfileCreateWithoutStoreInput, ProfileUncheckedCreateWithoutStoreInput>
+  export type ProfileCreateWithoutStore_sellerInput = {
+    bio: string
+    firstname: string
+    middlename?: string | null
+    lastname: string
+    suffix?: string | null
+    approved?: boolean | null
+    approved_date?: Date | string | null
+    verified?: boolean
+    verified_date?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProfileInput
+    store_owner?: StoreCreateNestedManyWithoutOwnerInput
+    sale?: SaleCreateNestedManyWithoutSaledByInput
+    Product?: ProductCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateWithoutStore_sellerInput = {
+    id?: number
+    userId: number
+    bio: string
+    firstname: string
+    middlename?: string | null
+    lastname: string
+    suffix?: string | null
+    approved?: boolean | null
+    approved_date?: Date | string | null
+    verified?: boolean
+    verified_date?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    store_owner?: StoreUncheckedCreateNestedManyWithoutOwnerInput
+    sale?: SaleUncheckedCreateNestedManyWithoutSaledByInput
+    Product?: ProductUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileCreateOrConnectWithoutStore_sellerInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutStore_sellerInput, ProfileUncheckedCreateWithoutStore_sellerInput>
+  }
+
+  export type ProfileUpsertWithoutStore_ownerInput = {
+    update: XOR<ProfileUpdateWithoutStore_ownerInput, ProfileUncheckedUpdateWithoutStore_ownerInput>
+    create: XOR<ProfileCreateWithoutStore_ownerInput, ProfileUncheckedCreateWithoutStore_ownerInput>
     where?: ProfileWhereInput
   }
 
-  export type ProfileUpdateToOneWithWhereWithoutStoreInput = {
+  export type ProfileUpdateToOneWithWhereWithoutStore_ownerInput = {
     where?: ProfileWhereInput
-    data: XOR<ProfileUpdateWithoutStoreInput, ProfileUncheckedUpdateWithoutStoreInput>
+    data: XOR<ProfileUpdateWithoutStore_ownerInput, ProfileUncheckedUpdateWithoutStore_ownerInput>
   }
 
-  export type ProfileUpdateWithoutStoreInput = {
+  export type ProfileUpdateWithoutStore_ownerInput = {
     bio?: StringFieldUpdateOperationsInput | string
     firstname?: StringFieldUpdateOperationsInput | string
     middlename?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14194,10 +16272,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
+    store_seller?: StoreUpdateManyWithoutSellerNestedInput
+    sale?: SaleUpdateManyWithoutSaledByNestedInput
     Product?: ProductUpdateManyWithoutProfileNestedInput
   }
 
-  export type ProfileUncheckedUpdateWithoutStoreInput = {
+  export type ProfileUncheckedUpdateWithoutStore_ownerInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     bio?: StringFieldUpdateOperationsInput | string
@@ -14211,7 +16291,44 @@ export namespace Prisma {
     verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_seller?: StoreUncheckedUpdateManyWithoutSellerNestedInput
+    sale?: SaleUncheckedUpdateManyWithoutSaledByNestedInput
     Product?: ProductUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUpsertWithWhereUniqueWithoutStore_sellerInput = {
+    where: ProfileWhereUniqueInput
+    update: XOR<ProfileUpdateWithoutStore_sellerInput, ProfileUncheckedUpdateWithoutStore_sellerInput>
+    create: XOR<ProfileCreateWithoutStore_sellerInput, ProfileUncheckedCreateWithoutStore_sellerInput>
+  }
+
+  export type ProfileUpdateWithWhereUniqueWithoutStore_sellerInput = {
+    where: ProfileWhereUniqueInput
+    data: XOR<ProfileUpdateWithoutStore_sellerInput, ProfileUncheckedUpdateWithoutStore_sellerInput>
+  }
+
+  export type ProfileUpdateManyWithWhereWithoutStore_sellerInput = {
+    where: ProfileScalarWhereInput
+    data: XOR<ProfileUpdateManyMutationInput, ProfileUncheckedUpdateManyWithoutStore_sellerInput>
+  }
+
+  export type ProfileScalarWhereInput = {
+    AND?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
+    OR?: ProfileScalarWhereInput[]
+    NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
+    id?: IntFilter<"Profile"> | number
+    userId?: IntFilter<"Profile"> | number
+    bio?: StringFilter<"Profile"> | string
+    firstname?: StringFilter<"Profile"> | string
+    middlename?: StringNullableFilter<"Profile"> | string | null
+    lastname?: StringFilter<"Profile"> | string
+    suffix?: StringNullableFilter<"Profile"> | string | null
+    approved?: BoolNullableFilter<"Profile"> | boolean | null
+    approved_date?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    verified?: BoolFilter<"Profile"> | boolean
+    verified_date?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
   }
 
   export type ProfileCreateWithoutProductInput = {
@@ -14227,7 +16344,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProfileInput
-    store: StoreCreateNestedOneWithoutProfileInput
+    store_owner?: StoreCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreCreateNestedManyWithoutSellerInput
+    sale?: SaleCreateNestedManyWithoutSaledByInput
   }
 
   export type ProfileUncheckedCreateWithoutProductInput = {
@@ -14238,13 +16357,15 @@ export namespace Prisma {
     middlename?: string | null
     lastname: string
     suffix?: string | null
-    storeId: number
     approved?: boolean | null
     approved_date?: Date | string | null
     verified?: boolean
     verified_date?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    store_owner?: StoreUncheckedCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreUncheckedCreateNestedManyWithoutSellerInput
+    sale?: SaleUncheckedCreateNestedManyWithoutSaledByInput
   }
 
   export type ProfileCreateOrConnectWithoutProductInput = {
@@ -14268,6 +16389,35 @@ export namespace Prisma {
   export type CategoryCreateOrConnectWithoutProductsInput = {
     where: CategoryWhereUniqueInput
     create: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
+  }
+
+  export type SaleCreateWithoutProductInput = {
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    saledBy?: ProfileCreateNestedOneWithoutSaleInput
+  }
+
+  export type SaleUncheckedCreateWithoutProductInput = {
+    id?: number
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    saledId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SaleCreateOrConnectWithoutProductInput = {
+    where: SaleWhereUniqueInput
+    create: XOR<SaleCreateWithoutProductInput, SaleUncheckedCreateWithoutProductInput>
+  }
+
+  export type SaleCreateManyProductInputEnvelope = {
+    data: SaleCreateManyProductInput | SaleCreateManyProductInput[]
+    skipDuplicates?: boolean
   }
 
   export type ProfileUpsertWithoutProductInput = {
@@ -14294,7 +16444,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
-    store?: StoreUpdateOneRequiredWithoutProfileNestedInput
+    store_owner?: StoreUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUpdateManyWithoutSellerNestedInput
+    sale?: SaleUpdateManyWithoutSaledByNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutProductInput = {
@@ -14305,13 +16457,15 @@ export namespace Prisma {
     middlename?: NullableStringFieldUpdateOperationsInput | string | null
     lastname?: StringFieldUpdateOperationsInput | string
     suffix?: NullableStringFieldUpdateOperationsInput | string | null
-    storeId?: IntFieldUpdateOperationsInput | number
     approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
     approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_owner?: StoreUncheckedUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUncheckedUpdateManyWithoutSellerNestedInput
+    sale?: SaleUncheckedUpdateManyWithoutSaledByNestedInput
   }
 
   export type CategoryUpsertWithWhereUniqueWithoutProductsInput = {
@@ -14340,6 +16494,194 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Category"> | Date | string
   }
 
+  export type SaleUpsertWithWhereUniqueWithoutProductInput = {
+    where: SaleWhereUniqueInput
+    update: XOR<SaleUpdateWithoutProductInput, SaleUncheckedUpdateWithoutProductInput>
+    create: XOR<SaleCreateWithoutProductInput, SaleUncheckedCreateWithoutProductInput>
+  }
+
+  export type SaleUpdateWithWhereUniqueWithoutProductInput = {
+    where: SaleWhereUniqueInput
+    data: XOR<SaleUpdateWithoutProductInput, SaleUncheckedUpdateWithoutProductInput>
+  }
+
+  export type SaleUpdateManyWithWhereWithoutProductInput = {
+    where: SaleScalarWhereInput
+    data: XOR<SaleUpdateManyMutationInput, SaleUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type ProfileCreateWithoutSaleInput = {
+    bio: string
+    firstname: string
+    middlename?: string | null
+    lastname: string
+    suffix?: string | null
+    approved?: boolean | null
+    approved_date?: Date | string | null
+    verified?: boolean
+    verified_date?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProfileInput
+    store_owner?: StoreCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreCreateNestedManyWithoutSellerInput
+    Product?: ProductCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateWithoutSaleInput = {
+    id?: number
+    userId: number
+    bio: string
+    firstname: string
+    middlename?: string | null
+    lastname: string
+    suffix?: string | null
+    approved?: boolean | null
+    approved_date?: Date | string | null
+    verified?: boolean
+    verified_date?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    store_owner?: StoreUncheckedCreateNestedManyWithoutOwnerInput
+    store_seller?: StoreUncheckedCreateNestedManyWithoutSellerInput
+    Product?: ProductUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileCreateOrConnectWithoutSaleInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutSaleInput, ProfileUncheckedCreateWithoutSaleInput>
+  }
+
+  export type ProductCreateWithoutSalesInput = {
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    description?: string | null
+    imageUrl?: string | null
+    weightUnit?: string | null
+    weightValue?: string | null
+    quantity?: number | null
+    unit?: string | null
+    unitValue?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profile: ProfileCreateNestedOneWithoutProductInput
+    category?: CategoryCreateNestedManyWithoutProductsInput
+  }
+
+  export type ProductUncheckedCreateWithoutSalesInput = {
+    id?: number
+    name: string
+    profileId: number
+    price: Decimal | DecimalJsLike | number | string
+    description?: string | null
+    imageUrl?: string | null
+    weightUnit?: string | null
+    weightValue?: string | null
+    quantity?: number | null
+    unit?: string | null
+    unitValue?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: CategoryUncheckedCreateNestedManyWithoutProductsInput
+  }
+
+  export type ProductCreateOrConnectWithoutSalesInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutSalesInput, ProductUncheckedCreateWithoutSalesInput>
+  }
+
+  export type ProfileUpsertWithoutSaleInput = {
+    update: XOR<ProfileUpdateWithoutSaleInput, ProfileUncheckedUpdateWithoutSaleInput>
+    create: XOR<ProfileCreateWithoutSaleInput, ProfileUncheckedCreateWithoutSaleInput>
+    where?: ProfileWhereInput
+  }
+
+  export type ProfileUpdateToOneWithWhereWithoutSaleInput = {
+    where?: ProfileWhereInput
+    data: XOR<ProfileUpdateWithoutSaleInput, ProfileUncheckedUpdateWithoutSaleInput>
+  }
+
+  export type ProfileUpdateWithoutSaleInput = {
+    bio?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    middlename?: NullableStringFieldUpdateOperationsInput | string | null
+    lastname?: StringFieldUpdateOperationsInput | string
+    suffix?: NullableStringFieldUpdateOperationsInput | string | null
+    approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProfileNestedInput
+    store_owner?: StoreUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUpdateManyWithoutSellerNestedInput
+    Product?: ProductUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutSaleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bio?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    middlename?: NullableStringFieldUpdateOperationsInput | string | null
+    lastname?: StringFieldUpdateOperationsInput | string
+    suffix?: NullableStringFieldUpdateOperationsInput | string | null
+    approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_owner?: StoreUncheckedUpdateManyWithoutOwnerNestedInput
+    store_seller?: StoreUncheckedUpdateManyWithoutSellerNestedInput
+    Product?: ProductUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProductUpsertWithoutSalesInput = {
+    update: XOR<ProductUpdateWithoutSalesInput, ProductUncheckedUpdateWithoutSalesInput>
+    create: XOR<ProductCreateWithoutSalesInput, ProductUncheckedCreateWithoutSalesInput>
+    where?: ProductWhereInput
+  }
+
+  export type ProductUpdateToOneWithWhereWithoutSalesInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutSalesInput, ProductUncheckedUpdateWithoutSalesInput>
+  }
+
+  export type ProductUpdateWithoutSalesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weightUnit?: NullableStringFieldUpdateOperationsInput | string | null
+    weightValue?: NullableStringFieldUpdateOperationsInput | string | null
+    quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitValue?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneRequiredWithoutProductNestedInput
+    category?: CategoryUpdateManyWithoutProductsNestedInput
+  }
+
+  export type ProductUncheckedUpdateWithoutSalesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileId?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weightUnit?: NullableStringFieldUpdateOperationsInput | string | null
+    weightValue?: NullableStringFieldUpdateOperationsInput | string | null
+    quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitValue?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUncheckedUpdateManyWithoutProductsNestedInput
+  }
+
   export type ProductCreateWithoutCategoryInput = {
     name: string
     price: Decimal | DecimalJsLike | number | string
@@ -14353,6 +16695,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     profile: ProfileCreateNestedOneWithoutProductInput
+    sales?: SaleCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutCategoryInput = {
@@ -14369,6 +16712,7 @@ export namespace Prisma {
     unitValue?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    sales?: SaleUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutCategoryInput = {
@@ -14464,6 +16808,23 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StoreCreateManyOwnerInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SaleCreateManySaledByInput = {
+    id?: number
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    productId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ProductCreateManyProfileInput = {
     id?: number
     name: string
@@ -14479,6 +16840,80 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type StoreUpdateWithoutOwnerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seller?: ProfileUpdateManyWithoutStore_sellerNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seller?: ProfileUncheckedUpdateManyWithoutStore_sellerNestedInput
+  }
+
+  export type StoreUncheckedUpdateManyWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreUpdateWithoutSellerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: ProfileUpdateOneWithoutStore_ownerNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutSellerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreUncheckedUpdateManyWithoutSellerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleUpdateWithoutSaledByInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: ProductUpdateOneRequiredWithoutSalesNestedInput
+  }
+
+  export type SaleUncheckedUpdateWithoutSaledByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    productId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleUncheckedUpdateManyWithoutSaledByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    productId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ProductUpdateWithoutProfileInput = {
     name?: StringFieldUpdateOperationsInput | string
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -14492,6 +16927,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateManyWithoutProductsNestedInput
+    sales?: SaleUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutProfileInput = {
@@ -14508,6 +16944,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUncheckedUpdateManyWithoutProductsNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateManyWithoutProfileInput = {
@@ -14523,6 +16960,69 @@ export namespace Prisma {
     unitValue?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileUpdateWithoutStore_sellerInput = {
+    bio?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    middlename?: NullableStringFieldUpdateOperationsInput | string | null
+    lastname?: StringFieldUpdateOperationsInput | string
+    suffix?: NullableStringFieldUpdateOperationsInput | string | null
+    approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProfileNestedInput
+    store_owner?: StoreUpdateManyWithoutOwnerNestedInput
+    sale?: SaleUpdateManyWithoutSaledByNestedInput
+    Product?: ProductUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutStore_sellerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bio?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    middlename?: NullableStringFieldUpdateOperationsInput | string | null
+    lastname?: StringFieldUpdateOperationsInput | string
+    suffix?: NullableStringFieldUpdateOperationsInput | string | null
+    approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_owner?: StoreUncheckedUpdateManyWithoutOwnerNestedInput
+    sale?: SaleUncheckedUpdateManyWithoutSaledByNestedInput
+    Product?: ProductUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateManyWithoutStore_sellerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bio?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    middlename?: NullableStringFieldUpdateOperationsInput | string | null
+    lastname?: StringFieldUpdateOperationsInput | string
+    suffix?: NullableStringFieldUpdateOperationsInput | string | null
+    approved?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    approved_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verified_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleCreateManyProductInput = {
+    id?: number
+    quantity: number
+    price: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    saledId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CategoryUpdateWithoutProductsInput = {
@@ -14545,6 +17045,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SaleUpdateWithoutProductInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    saledBy?: ProfileUpdateOneWithoutSaleNestedInput
+  }
+
+  export type SaleUncheckedUpdateWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    saledId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleUncheckedUpdateManyWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    saledId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ProductUpdateWithoutCategoryInput = {
     name?: StringFieldUpdateOperationsInput | string
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -14558,6 +17087,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUpdateOneRequiredWithoutProductNestedInput
+    sales?: SaleUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutCategoryInput = {
@@ -14574,6 +17104,7 @@ export namespace Prisma {
     unitValue?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sales?: SaleUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateManyWithoutCategoryInput = {

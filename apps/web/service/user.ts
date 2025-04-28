@@ -1,6 +1,7 @@
 import { Role, User } from '@/generated/prisma';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { prisma } from '@/lib/prisma';
+import { UserWithProfile } from '@/types';
 
 export const findAllUsers = async (): Promise<User[]> => {
   return tryCatch(async () => {
@@ -8,10 +9,18 @@ export const findAllUsers = async (): Promise<User[]> => {
   }, `Failed to fetch users.`);
 };
 
-export const findUserById = async (userId: number): Promise<User | null> => {
+export const findUserById = async (userId: number): Promise<UserWithProfile | null> => {
   return tryCatch(async () => {
     return await prisma.user.findUnique({
       where: { id: userId },
+      include: {
+        profile: {
+          include: {
+            store_seller: true,
+            store_owner: true,
+          },
+        },
+      },
     });
   }, `Failed to fetch user by ID ${userId}`);
 };
@@ -20,6 +29,14 @@ export const findUserByEmail = async (email: string): Promise<User | null> => {
   return tryCatch(async () => {
     return await prisma.user.findUnique({
       where: { email: email },
+      include: {
+        profile: {
+          include: {
+            store_seller: true,
+            store_owner: true,
+          },
+        },
+      },
     });
   }, `Failed to fetch user by email ${email}`);
 };
@@ -32,7 +49,11 @@ export const findUsersByRole = async (role: Role): Promise<User[]> => {
   }, `Failed to fetch users by role ${role}`);
 };
 
-export const createUser = async (userData: { email: string; username?: string; role?: Role }): Promise<User> => {
+export const createUser = async (userData: {
+  email: string;
+  username?: string;
+  role?: Role;
+}): Promise<User> => {
   return tryCatch(async () => {
     return await prisma.user.create({
       data: userData,

@@ -8,7 +8,7 @@ const { auth } = NextAuth(authConfig);
 const DEFAULT_REDIRECT = '/'; // where to go after login
 const ROOT = '/';
 const PUBLIC_ROUTES = ['/signin', '/signup', '/forgot-password'];
-
+const OWNER_ROUTE_PREFIXES = ['/owner', '/api'];
 export default auth(async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const authenticated = await getToken({
@@ -16,8 +16,8 @@ export default auth(async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
     cookieName: 'next-auth.session-token', // Explicitly set it
   });
-  console.log('authenticated', authenticated);
-  console.log('nextUrl', nextUrl);
+  // console.log('authenticated', authenticated);
+  // console.log('nextUrl', nextUrl);
   // const isAuthenticated = !!req.auth;
   // console.log('req', req);
   const { pathname } = nextUrl;
@@ -33,6 +33,11 @@ export default auth(async function middleware(req: NextRequest) {
   if (!authenticated && !isPublicRoute) {
     return Response.redirect(new URL('/signin', nextUrl));
   }
+
+  // const isOwnerRoute = OWNER_ROUTE_PREFIXES.some(prefix => pathname.startsWith(prefix));
+  // if (isOwnerRoute && authenticated?.role !== 'OWNER') {
+  //   return Response.redirect(new URL('/', nextUrl)); // Not authorized
+  // }
 
   // Otherwise, continue
   return undefined;
