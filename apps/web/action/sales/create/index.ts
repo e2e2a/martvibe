@@ -1,6 +1,6 @@
 'use server';
 import { auth } from '@/auth';
-import { Decimal } from '@/custom/generated/prisma/runtime/library';
+import { Decimal } from '@prisma/client/runtime/library';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { findProductById, updateProductById } from '@/service/products';
 import { findProfileByUserId } from '@/service/profile';

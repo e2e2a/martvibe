@@ -1,5 +1,5 @@
-import { Sale } from '@/custom/generated/prisma';
-import { Decimal } from '@/custom/generated/prisma/runtime/library';
+import { Sale } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { prisma } from '@/lib/prisma';
 import { SaleWithProduct } from '@/types';

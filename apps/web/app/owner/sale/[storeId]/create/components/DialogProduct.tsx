@@ -8,12 +8,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Product } from '@/custom/generated/prisma';
+import { Product } from '@prisma/client';
 import Image from 'next/image';
 import DropdownWeight from './DropdownWeight';
 import { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Decimal } from '@/custom/generated/prisma/runtime/library';
+import { Decimal } from '@prisma/client/runtime/library';
 import useSWRMutation from 'swr/mutation';
 import { MutateRequest } from '@/lib/mutation/auth';
 import { makeToastError, makeToastSucess } from '@/lib/toast';

@@ -1,6 +1,6 @@
 'use server';
-import { Product } from '@/custom/generated/prisma';
-import { Decimal } from '@/custom/generated/prisma/runtime/library';
+import { Product } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { prisma } from '@/lib/prisma';
 
