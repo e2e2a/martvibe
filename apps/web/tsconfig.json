@@ -9,6 +9,7 @@
     ],
     "paths": {
        "@/*": ["*"],
+       "@prisma/client": ["./node_modules/@prisma/client"]
     },
     "typeRoots": [
       "node_modules/@types",
