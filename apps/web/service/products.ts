@@ -1,8 +1,8 @@
 'use server';
-import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { prisma } from '@/lib/prisma';
+import { Product } from '@/custom/generated/prisma/client';
 
 export type ProductType = {
   name: string;

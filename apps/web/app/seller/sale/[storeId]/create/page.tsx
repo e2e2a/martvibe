@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import SkeletonProducts from './components/SkeletonProducts';
-import { Product } from '@prisma/client';
 import DialogProduct from './components/DialogProduct';
 import { Decimal } from '@prisma/client/runtime/library';
+import { Product } from '@/custom/generated/prisma/client';
 
 type WeightUnit = {
   id: number;

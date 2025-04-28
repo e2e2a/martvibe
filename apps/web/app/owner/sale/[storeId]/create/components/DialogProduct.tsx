@@ -7,8 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Product } from '@prisma/client';
+
 import Image from 'next/image';
 import DropdownWeight from './DropdownWeight';
 import { useRef, useState } from 'react';
@@ -18,6 +17,7 @@ import useSWRMutation from 'swr/mutation';
 import { MutateRequest } from '@/lib/mutation/auth';
 import { makeToastError, makeToastSucess } from '@/lib/toast';
 import { AlertDialogProduct } from './AlertDialogProduct';
+import { Product } from '@/custom/generated/prisma/client';
 
 type WeightUnit = {
   id: number;

@@ -1,5 +1,5 @@
 'use server';
-import { Category } from '@prisma/client';
+import { Category } from '@/custom/generated/prisma/client';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { prisma } from '@/lib/prisma';
 

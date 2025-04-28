@@ -12,7 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { SaleWithProduct } from '@/types';
-import { Decimal } from '@prisma/client/runtime/index-browser';
+import { Decimal } from '@/custom/generated/prisma/runtime/index-browser';
 
 export default function Page() {
   const [sales, setSales] = useState<SaleWithProduct[] | null>([]);
@@ -20,7 +20,6 @@ export default function Page() {
   const { data: dataA, error, isLoading } = useSWR('/api/sale/get');
 
   useEffect(() => {
-    console.log('data', dataA);
     if (dataA && dataA.sales.length > 0) {
       const getUniqueSalesByProductIdAndPrice = (): SaleWithProduct[] => {
         const uniqueSales = dataA.sales.reduce(

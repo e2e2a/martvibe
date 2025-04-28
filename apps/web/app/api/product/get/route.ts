@@ -1,6 +1,6 @@
 import { getProductByProfileIdAction, getProductByStoreIdAction } from '@/action/product/get';
 import { auth } from '@/auth';
-import { Product } from '@prisma/client';
+import { Product } from '@/custom/generated/prisma/client';
 import { findProfileByUserId } from '@/service/profile';
 import { NextRequest, NextResponse } from 'next/server';
 
