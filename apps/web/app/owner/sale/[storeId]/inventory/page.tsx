@@ -12,7 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { SaleWithProduct } from '@/types';
-import { Decimal } from '@/generated/prisma/runtime/index-browser';
+import { Decimal } from '@/custom/generated/prisma/runtime/index-browser';
 
 export default function Page() {
   const [sales, setSales] = useState<SaleWithProduct[] | null>([]);

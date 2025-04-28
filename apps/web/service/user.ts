@@ -1,4 +1,4 @@
-import { Role, User } from '@/generated/prisma';
+import { Role, User } from '@/custom/generated/prisma';
 import { tryCatch } from '@/lib/helpers/tryCatch';
 import { prisma } from '@/lib/prisma';
 import { UserWithProfile } from '@/types';

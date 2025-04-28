@@ -1,5 +1,5 @@
-import { Product, Profile, Sale, Store, User } from '@/generated/prisma';
-import { Category } from '@/generated/prisma';
+import { Product, Profile, Sale, Store, User } from '@/custom/generated/prisma';
+import { Category } from '@/custom/generated/prisma';
 import { LucideIcon } from 'lucide-react';
 
 export type UserWithProfile = User & { profile: ProfileWithStore };

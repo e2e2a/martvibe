@@ -12,7 +12,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Decimal } from '@/generated/prisma/runtime/library';
+import { Decimal } from '@/custom/generated/prisma/runtime/library';
 
 type WeightUnit = {
   id: number;

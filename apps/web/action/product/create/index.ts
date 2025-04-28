@@ -4,7 +4,7 @@ import { tryCatch } from '@/lib/helpers/tryCatch';
 import { ProductValidator } from '@/lib/validators/product/create';
 import { createProduct } from '@/service/products';
 import { z } from 'zod';
-import { Decimal } from '@/generated/prisma/runtime/library';
+import { Decimal } from '@/custom/generated/prisma/runtime/library';
 import { prisma } from '@/lib/prisma';
 import { findProfileByUserId } from '@/service/profile';
 
