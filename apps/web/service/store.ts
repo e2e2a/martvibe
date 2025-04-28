@@ -1,6 +1,5 @@
 import { tryCatch } from "@/lib/helpers/tryCatch";
 import { prisma } from "@/lib/prisma";
-import { UserWithProfile } from "@/types";
 
 export const findStoreById = async (id: number): Promise<any | null> => {
   return tryCatch(async () => {

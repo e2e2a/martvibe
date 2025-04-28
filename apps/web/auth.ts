@@ -4,7 +4,7 @@ import { createUser, findUserByEmail, findUserById } from './service/user';
 import { createAccount, findAccountByUserId } from './service/account';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './lib/prisma';
-import { Store } from '@prisma/client';
+import { Store } from '@/custom/generated/prisma/client';
 
 const isInProductionMode = process.env.NEXT_PUBLIC_NODE_ENV === 'production';
 
