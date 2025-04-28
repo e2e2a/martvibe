@@ -29,14 +29,14 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       return (
         <div key={cell.id} className="flex items-center justify-center">
           <div className="border border-primary shadow-md drop-shadow-sm bg-accent">
-          <Image
-            height={250}
-            width={250}
-            src={user?.imageUrl || '/product/product-default.png'}
-            alt="product-image"
-            className='h-10 w-10'
-            priority
-          />
+            <Image
+              height={250}
+              width={250}
+              src={user?.imageUrl || '/product/product-default.png'}
+              alt="product-image"
+              className="h-10 w-10"
+              priority
+            />
           </div>
         </div>
       );
@@ -119,7 +119,9 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       const user = row.original;
       return (
         <div key={cell.id} className="">
-          {user?.category?.map(cat => cat.name).join(', ')}
+          {user?.category
+            ?.map((cat: { name: string; id: number; createdAt: Date; updatedAt: Date }) => cat.name)
+            .join(', ')}
         </div>
       );
     },

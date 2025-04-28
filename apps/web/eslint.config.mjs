@@ -7,6 +7,7 @@ const config = {
   rules: {
     ...nextJsConfig.rules,
     'turbo/no-undeclared-env-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off', // 🚫 Disables the 'no-explicit-any' rule
   },
 };
 
