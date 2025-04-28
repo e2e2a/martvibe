@@ -1,6 +1,6 @@
 import { getProductByProfileIdAction, getProductByStoreIdAction } from '@/action/product/get';
 import { auth } from '@/auth';
-import { Product } from '@/custom/generated/prisma/client';
+import { Product, Store } from '@/custom/generated/prisma/client';
 import { findProfileByUserId } from '@/service/profile';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       products = await getProductByProfileIdAction(Number(profile.id));
       break;
     case 'SELLER':
-      const storeExists = profile.store_seller.find(store => store.id === Number(storeId));
+      const storeExists = profile.store_seller.find((store: Store) => store.id === Number(storeId));
       if (storeExists) {
         products = await getProductByStoreIdAction(Number(storeId));
       } else {
