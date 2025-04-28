@@ -1,4 +1,3 @@
-'use client';
 import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
@@ -11,6 +10,7 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 interface IProps {
   item: any;
@@ -18,7 +18,7 @@ interface IProps {
 
 const SidebarItem = ({ item }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { data: session } = useSession();
   return (
     <>
       {item.url ? (
@@ -55,12 +55,29 @@ const SidebarItem = ({ item }: IProps) => {
               <SidebarGroupContent className="gap-0">
                 <SidebarMenu className="gap-0 gap-y-1">
                   {item.items?.map((item: any, idx: any) => {
+                    let url = item.url;
+                    const role = session!.user.role;
+                    if (
+                      role === 'SELLER' ||
+                      (role === 'OWNER' && item.title.toLowerCase() === 'sales')
+                    ) {
+                      let store = [];
+                      if (role === 'SELLER') store = session!.user.seller_store;
+                      if (role === 'OWNER') store = session!.user.store_owner;
+                      if (store.length > 0) {
+                        if (store.length === 1) {
+                          const urlParts = item.url.split('/'); // Split the URL into parts
+                          urlParts.splice(3, 0, store[0].id.toString()); // Insert storeId at the third "/" (index 3)
+                          url = urlParts.join('/'); // Rejoin the URL
+                        }
+                      }
+                    }
                     return (
                       <SidebarMenuItem
                         className=" hover:bg-orange-100 text-[15px] font-medium hover:text-sidebar-accent-foreground "
                         key={idx}
                       >
-                        <Link href={item.url} className="w-full pl-2 flex gap-1 items-center">
+                        <Link href={url} className="w-full pl-2 flex gap-1 items-center">
                           <item.icon className={`h-4 w-4 stroke-primary`} />
                           {item.title}
                         </Link>

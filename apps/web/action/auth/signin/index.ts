@@ -11,12 +11,21 @@ export const signInAction = async (data: any) => {
     if (!validatedFields.success) return { message: 'Invalid fields!', status: 400 };
 
     const checkedUser = await checkUser(validatedFields.data);
-    if (!checkedUser || checkedUser.error) return { message: 'Post updated successfully!', token: checkedUser?.token, status: checkedUser.status };
+    if (!checkedUser || checkedUser.error)
+      return {
+        message: 'Post updated successfully!',
+        token: checkedUser?.token,
+        status: checkedUser.status,
+      };
 
-    const signedIn = await handleSignIn(checkedUser.user._id, checkedUser.user.email, checkedUser.user.password);
+    const signedIn = await handleSignIn(
+      checkedUser.user._id,
+      checkedUser.user.email,
+      checkedUser.user.password
+    );
     if (signedIn && signedIn.error) return { message: signedIn.error, status: signedIn.status };
 
-    return { message: 'Post updated successfully!', status: 200 };
+    return { message: 'Post updated successfully!', role: checkedUser.user.role, status: 200 };
   });
 };
 
@@ -28,10 +37,11 @@ export const signInAction = async (data: any) => {
 const checkUser = async (data: any) => {
   return tryCatch(async () => {
     const existingUser = await findUserByEmail(data.email);
-    console.log('user', existingUser);
-    if (existingUser && existingUser.revoke) return { error: 'Account has been revoked by admin.', status: 403 };
+    if (existingUser && existingUser.revoke)
+      return { error: 'Account has been revoked by admin.', status: 403 };
 
-    if (!existingUser || !existingUser.email || !existingUser.password) return { error: 'Incorrect email or password.', status: 403 };
+    if (!existingUser || !existingUser.email || !existingUser.password)
+      return { error: 'Incorrect email or password.', status: 403 };
     if (!existingUser.verified) return { error: 'Email is not verified yet.', status: 403 };
 
     const isMatch = await comparePassword(data.password, existingUser.password as string);

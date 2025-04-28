@@ -10,8 +10,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  // url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 /**
@@ -76,11 +78,13 @@ model Profile {
   middlename    String?
   lastname      String
   suffix        String?
+  // For Owner
+  store_owner   Store[]   @relation("StoreOwner")
   // For Seller
-  storeId       Int       @unique
-  store         Store     @relation(fields: [storeId], references: [id])
+  store_seller  Store[]   @relation("ProfileStore")
   approved      Boolean?
   approved_date DateTime?
+  sale          Sale[]
   //
   Product       Product[]
   verified      Boolean   @default(false)
@@ -101,13 +105,13 @@ model VerificationRequest {
 }
 
 model Store {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  profileId Int?
-  profile   Profile? @relation
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  ownerId   Int?
+  owner     Profile?  @relation("StoreOwner", fields: [ownerId], references: [id])
+  seller    Profile[] @relation("ProfileStore")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // enum Unit {
@@ -131,11 +135,25 @@ model Product {
   weightUnit  String? // ex: product: vinegar, weightUnit: ml , weightValue: '750' // ex2: ex: product: egg, weightUnit: Small , weightValue: null
   weightValue String?
   quantity    Int?
-  unit        String? // ex: pcs
-  unitValue   Int? // 1pcs each
+  unit        String?
+  unitValue   Int?
   category    Category[] @relation("ProductCategories")
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  sales       Sale[]
+}
+
+model Sale {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2)
+  total     Decimal  @db.Decimal(10, 2)
+  saledId   Int?
+  saledBy   Profile? @relation(fields: [saledId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Category {

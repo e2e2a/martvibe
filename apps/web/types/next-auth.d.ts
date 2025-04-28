@@ -1,8 +1,9 @@
-
 import NextAuth, { type DefaultSession } from 'next-auth';
 
 export type ExtendedUser = DefaultSession['user'] & {
   username: string;
+  seller_store: any[];
+  store_owner: any[];
   role: 'ADMIN' | 'BUYER' | 'SELLER' | 'OWNER';
 };
 

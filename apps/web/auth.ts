@@ -4,6 +4,7 @@ import { createUser, findUserByEmail, findUserById } from './service/user';
 import { createAccount, findAccountByUserId } from './service/account';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './lib/prisma';
+import { Store } from './generated/prisma';
 
 const isInProductionMode = process.env.NEXT_PUBLIC_NODE_ENV === 'production';
 
@@ -56,7 +57,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             if (existingUser.revoke) return false;
             const existAccount = await findAccountByUserId(existingUser.id);
             if (!existAccount) {
-              await createAccount({ ...account, expires_at: account.expires_at?.toString(), userId: existingUser.id });
+              await createAccount({
+                ...account,
+                expires_at: account.expires_at?.toString(),
+                userId: existingUser.id,
+              });
             }
             // await updateUserLogin(existingUser._id);
             return true;
@@ -71,7 +76,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           };
 
           const newUser = await createUser(userData);
-          await createAccount({ ...account, expires_at: account.expires_at?.toString(), userId: newUser.id });
+          await createAccount({
+            ...account,
+            expires_at: account.expires_at?.toString(),
+            userId: newUser.id,
+          });
           //   await updateUserLogin(newUser._id as string);
           //   await createProfile(newUser._id, profile);
           return true;
@@ -95,6 +104,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.id = token.sub;
         session.user.role = token.role;
         session.user.username = token.username as string;
+        session.user.seller_store = token.seller_store as Store[];
+        session.user.store_owner = token.store_owner as Store[];
       }
 
       return session;
@@ -104,8 +115,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         // If the user signs in, cache data in the token
         if (user) {
           const userData = await findUserById(Number(user.id));
+          console.log('auth1', userData);
           token.sub = userData?.id.toString();
-          token.role = userData?.role!;
+          (token.seller_store = userData?.profile.store_seller),
+            (token.store_owner = userData?.profile.store_owner),
+            (token.role = userData?.role!);
           token.username = userData?.username;
         }
 

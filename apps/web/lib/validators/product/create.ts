@@ -23,7 +23,8 @@ export const ProductValidator = z.object({
   weightUnit: z
     .string()
     .min(1, 'Product classification is required*')
-    .max(20, 'Classification should not exceed 20 characters'),
+    .max(20, 'Classification should not exceed 20 characters')
+    .regex(/^[A-Za-z]+$/, 'Weight unit must contain only alphabetic letters'),
   weightValue: z.string().optional(),
   // .superRefine((val, ctx) => {
   //   if (val && val !== '') {

@@ -38,5 +38,30 @@ export const findProductByProfileId = async (profileId: number): Promise<Product
         category: true,
       },
     });
-  }, `Failed to fetch user by ID ${profileId}`);
+  }, `Failed to fetch product by profileId ${profileId}`);
+};
+
+export const findProductById = async (id: number): Promise<Product | null> => {
+  return tryCatch(async () => {
+    return await prisma.product.findFirst({
+      where: { id },
+      include: {
+        category: true,
+      },
+    });
+  }, `Failed to fetch Product by ID ${id}`);
+};
+interface IProps {
+  quantity: number;
+  id: number;
+}
+export const updateProductById = async (data: IProps): Promise<Product | null> => {
+  return tryCatch(async () => {
+    return await prisma.product.update({
+      where: { id: data.id },
+      data: {
+        quantity: data.quantity,
+      },
+    });
+  }, `Failed to update Product by ID ${data.id}`);
 };

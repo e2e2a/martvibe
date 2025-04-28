@@ -1,23 +1,33 @@
 import { prisma } from '@/lib/prisma';
 
 async function main() {
-  // Seeding Users
   const user1 = await prisma.user.create({
     data: {
       email: 'john@example.com',
       username: 'john_doe',
-      role: 'OWNER', // Assuming you have a role enum
+      role: 'OWNER',
       verified: true,
+      verified_date: new Date(),
+      revoke: false,
+      password: 'hashedPassword',
       profile: {
         create: {
           bio: 'Hello, I am John Doe!',
           firstname: 'John',
           lastname: 'Doe',
-          store: {
-            create: {
-              name: "John's Store",
-            },
+          store_owner: {
+            create: [
+              { name: "John's Store 1" },
+              { name: "John's Store 2" },
+            ],
           },
+        },
+      },
+    },
+    include: {
+      profile: {
+        include: {
+          store_owner: true,
         },
       },
     },
@@ -29,30 +39,52 @@ async function main() {
       username: 'jane_doe',
       role: 'OWNER',
       verified: true,
+      verified_date: new Date(),
+      revoke: false,
+      password: 'hashedPassword',
       profile: {
         create: {
           bio: 'Hello, I am Jane Doe!',
           firstname: 'Jane',
           lastname: 'Doe',
-          store: {
-            create: {
-              name: "Jane's Store",
-            },
+          store_owner: {
+            create: [{ name: "Jane's Store" }],
           },
         },
       },
     },
   });
 
-  console.log({ user1, user2 });
+  const johnsFirstStoreId = user1?.profile?.store_owner[0]?.id;
 
-  // Additional models can be seeded here if needed.
+  const seller = await prisma.user.create({
+    data: {
+      email: 'seller@example.com',
+      username: 'seller_user',
+      role: 'SELLER',
+      verified: true,
+      verified_date: new Date(),
+      revoke: false,
+      password: 'hashedPassword',
+      profile: {
+        create: {
+          bio: 'I am a seller for Store 1',
+          firstname: 'Seller',
+          lastname: 'User',
+          store_seller: {
+            connect: [{ id: johnsFirstStoreId }],
+          },
+        },
+      },
+    },
+  });
+
+  console.log('Seed completed successfully');
 }
 
-// This will run the main function
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('Seed failed:', e);
     process.exit(1);
   })
   .finally(async () => {

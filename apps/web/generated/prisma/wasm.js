@@ -158,7 +158,6 @@ exports.Prisma.ProfileScalarFieldEnum = {
   middlename: 'middlename',
   lastname: 'lastname',
   suffix: 'suffix',
-  storeId: 'storeId',
   approved: 'approved',
   approved_date: 'approved_date',
   verified: 'verified',
@@ -179,7 +178,7 @@ exports.Prisma.VerificationRequestScalarFieldEnum = {
 exports.Prisma.StoreScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  profileId: 'profileId',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -196,6 +195,17 @@ exports.Prisma.ProductScalarFieldEnum = {
   quantity: 'quantity',
   unit: 'unit',
   unitValue: 'unitValue',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SaleScalarFieldEnum = {
+  id: 'id',
+  quantity: 'quantity',
+  price: 'price',
+  total: 'total',
+  saledId: 'saledId',
+  productId: 'productId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -236,6 +246,7 @@ exports.Prisma.ModelName = {
   VerificationRequest: 'VerificationRequest',
   Store: 'Store',
   Product: 'Product',
+  Sale: 'Sale',
   Category: 'Category'
 };
 
