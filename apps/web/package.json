@@ -6,13 +6,16 @@
   "scripts": {
     "seed": "npx tsx prisma/category.seed.ts",
     "vercel-build": "",
-    "postinstall": "prisma generate",
+    "build": "prisma generate && next build",
+    "postinstall": "prisma generate && prisma migrate deploy",
     "dev": "next dev --turbopack --port 3000",
-    "build": "npx prisma generate && npx prisma db push && next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
     "prepare": "prisma generate"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.9.0",
