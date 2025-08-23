@@ -9,7 +9,7 @@ async function main() {
       verified: true,
       verified_date: new Date(),
       revoke: false,
-      password: 'hashedPassword',
+      password: '$2a$12$9/UBJuM5YvOFSnxi5xh2y.YEZdPik9AE5h4aQzb5zq8Quenao3aSq', // bcrypt hash for '12345678'
       profile: {
         create: {
           bio: 'Hello, I am John Doe!',
@@ -41,7 +41,7 @@ async function main() {
       verified: true,
       verified_date: new Date(),
       revoke: false,
-      password: 'hashedPassword',
+      password: '$2a$12$9/UBJuM5YvOFSnxi5xh2y.YEZdPik9AE5h4aQzb5zq8Quenao3aSq',
       profile: {
         create: {
           bio: 'Hello, I am Jane Doe!',
@@ -65,7 +65,7 @@ async function main() {
       verified: true,
       verified_date: new Date(),
       revoke: false,
-      password: 'hashedPassword',
+      password: '$2a$12$9/UBJuM5YvOFSnxi5xh2y.YEZdPik9AE5h4aQzb5zq8Quenao3aSq',
       profile: {
         create: {
           bio: 'I am a seller for Store 1',
